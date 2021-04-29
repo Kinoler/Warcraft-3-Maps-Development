@@ -1,0 +1,92 @@
+
+
+- Удалены читы.
+- "-save" не убивает героя, но все герои сохраняются под ником на первом слоте.
+- Удален спид хак детектор и проверка конца времени волн.
+- Добавлены команды "-rw" и "-rb", которые сбрасываат все воны и воскрешает боссов соответственно.
+- При вызове одной и той же волны количество мобов так же увеличивается.
+- Добавлена возможность передавать контроль.
+- Добавлена возможность передавать деньги(кривая).
+- После смерти персонаж воскресает у Конопли с половиной хр.
+- У меха убрано ограничение на баррикады (до 400).
+- Изменен минимальный уровень в 3ю зону на 150.
+- Уверичен получаемый опыт в 100 раз.
+- Босс на базе больше не становиться неуязвимым.
+
+1. "nzInit()" -> ""
+	Удалить nzInit (читы) в методе main
+	
+2. "IILLI1I1" -> "IL11I111"
+	Изменить действие команды "-save" на ту что на EVENT_PLAYER_UNIT_DEATH ниже.
+	
+3. Добавить функцию
+function GetSelectedUnit takes player p returns unit
+    local group g = CreateGroup()
+    local unit u
+    call GroupEnumUnitsSelected(g, p, null)
+    set u = FirstOfGroup(g)
+    call DestroyGroup(g)
+    set g= null
+    return u
+endfunction
+
+4. 
+	local unit IILLLII1=GetTriggerUnit()
+	local player IILLLIL1=GetOwningPlayer(IILLLII1)
+	->
+	local player IL11II11=GetTriggerPlayer()
+	local unit IL11I1L1=GetSelectedUnit(IL11II11)
+
+	В методе по сохранении
+
+5. "call InitTrig_SHDetection()" -> ""
+	Удаляем сх детектор.
+	
+6.  поиск "использовал рестарт волн", замена всей функции на подобие этого, после чего место вызова функции заменить на 
+
+	function I111LIL1 takes nothing returns nothing
+		call EnableTrigger(IIL1II1)
+		call EnableTrigger(IIL1LI1)
+		call EnableTrigger(IILI1I1)
+		call EnableTrigger(IILIII1)
+		call EnableTrigger(IILILI1)
+		call EnableTrigger(IILL1I1)
+		call EnableTrigger(IILLII1)
+		call EnableTrigger(IILLLI1)
+		call EnableTrigger(IL111I1)
+		call EnableTrigger(IIL11I1)
+		call EnableTrigger(ILI1L11)
+		call EnableTrigger(ILII1I1)
+		call DisplayTimedTextToForce(GetPlayersAll(),10.00,("Игрок"+(" "+(GetPlayerName(GetTriggerPlayer())+("|r"+(" использовал рестарт волн."))))))
+	endfunction
+
+	Место вызова функции выше
+	function I11I1111 takes nothing returns nothing
+		set LL1LIL1=CreateTrigger()
+		call TriggerRegisterPlayerChatEvent(LL1LIL1,Player(0),"-restart",true)
+		call TriggerRegisterPlayerChatEvent(LL1LIL1,Player(1),"-restart",true)
+		call TriggerRegisterPlayerChatEvent(LL1LIL1,Player(2),"-restart",true)
+		call TriggerRegisterPlayerChatEvent(LL1LIL1,Player(3),"-restart",true)
+		call TriggerRegisterPlayerChatEvent(LL1LIL1,Player(4),"-restart",true)
+		call TriggerRegisterPlayerChatEvent(LL1LIL1,Player(5),"-restart",true)
+		call TriggerRegisterPlayerChatEvent(LL1LIL1,Player(6),"-restart",true)
+		call TriggerRegisterPlayerChatEvent(LL1LIL1,Player(7),"-restart",true)
+		call TriggerRegisterPlayerChatEvent(LL1LIL1,Player(8),"-restart",true)
+		call TriggerRegisterPlayerChatEvent(LL1LIL1,Player(9),"-restart",true)
+		call TriggerAddAction(I1ILI11,function I111LIL1)
+		call TriggerAddAction(LL1LIL1,function I111LL11)
+	endfunction
+	
+7. "())then\r\ncall SetUserControlForceOff(LIII1II(MAP_CONTROL_USER))\r\nelse\r\nendif" -> "())then\r\n\r\nelse\r\nendif"
+
+
+
+
+
+
+
+
+
+
+
+
