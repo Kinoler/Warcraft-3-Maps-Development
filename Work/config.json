@@ -1,0 +1,6 @@
+{
+	"libraries": ["storm.asi"],
+	"common_j": "!scripts\\common.j",
+	"blizzard_j": "!scripts\\blizzard.j",
+	"main_j": "war3map.j"
+}
