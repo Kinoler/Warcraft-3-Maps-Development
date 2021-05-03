@@ -43165,31 +43165,12 @@ call SetPlayerAllianceStateVisionBJ(Player(10),Player(5),true)
 call SetPlayerAllianceStateVisionBJ(Player(10),Player(6),true)
 call SetPlayerAllianceStateVisionBJ(Player(10),Player(7),true)
 call SetPlayerAllianceStateVisionBJ(Player(10),Player(9),true)
-call SwapControlEnable()
 call SetPlayerTeam(Player(8),1)
 call SetPlayerTeam(Player(11),1)
 call SetPlayerAllianceStateAllyBJ(Player(8),Player(11),true)
 call SetPlayerAllianceStateAllyBJ(Player(11),Player(8),true)
 call SetPlayerAllianceStateVisionBJ(Player(8),Player(11),true)
 call SetPlayerAllianceStateVisionBJ(Player(11),Player(8),true)
-endfunction
-function SwapControlEnable takes nothing returns nothing
-	local integer numberOfPlayer=6
-	local integer i=0
-	local integer j=0
-	
-    loop
-    exitwhen i>numberOfPlayer
-		set j=0
-
-		loop
-		exitwhen j>numberOfPlayer
-			call SetPlayerAllianceStateVisionBJ(Player(i),Player(j),true) - Чтобы передача контроля в меню была доступна
-			set j=j+1
-		endloop
-		
-		set i=i+1
-    endloop
 endfunction
 function Func7080 takes player loc_player01,string loc_string01,boolean loc_boolean01 returns nothing
   local trigger loc_trigger01=CreateTrigger()
@@ -47718,26 +47699,6 @@ set IL11LLI1=CreateTrigger()
 call TriggerRegisterEnterRectSimple(IL11LLI1,LII1IL1)
 call TriggerAddCondition(IL11LLI1,Condition(function I1L1ILLL1))
 call TriggerAddAction(IL11LLI1,function Fukki_EXP_Rate8)
-set IL11LLL1=CreateTrigger()
-call TriggerRegisterPlayerStateEvent(IL11LLL1,Player(0),PLAYER_STATE_RESOURCE_GOLD,GREATER_THAN_OR_EQUAL,500000.00)
-call TriggerRegisterPlayerStateEvent(IL11LLL1,Player(1),PLAYER_STATE_RESOURCE_GOLD,GREATER_THAN_OR_EQUAL,500000.00)
-call TriggerRegisterPlayerStateEvent(IL11LLL1,Player(2),PLAYER_STATE_RESOURCE_GOLD,GREATER_THAN_OR_EQUAL,500000.00)
-call TriggerRegisterPlayerStateEvent(IL11LLL1,Player(3),PLAYER_STATE_RESOURCE_GOLD,GREATER_THAN_OR_EQUAL,500000.00)
-call TriggerRegisterPlayerStateEvent(IL11LLL1,Player(4),PLAYER_STATE_RESOURCE_GOLD,GREATER_THAN_OR_EQUAL,500000.00)
-call TriggerRegisterPlayerStateEvent(IL11LLL1,Player(5),PLAYER_STATE_RESOURCE_GOLD,GREATER_THAN_OR_EQUAL,500000.00)
-call TriggerRegisterPlayerStateEvent(IL11LLL1,Player(6),PLAYER_STATE_RESOURCE_GOLD,GREATER_THAN_OR_EQUAL,500000.00)
-call TriggerRegisterPlayerStateEvent(IL11LLL1,Player(7),PLAYER_STATE_RESOURCE_GOLD,GREATER_THAN_OR_EQUAL,500000.00)
-call TriggerAddAction(IL11LLL1,function I1L1L11L1)
-set IL1I1111=CreateTrigger()
-call TriggerRegisterPlayerAllianceChange(IL1I1111,Player(0),ALLIANCE_SHARED_CONTROL)
-call TriggerRegisterPlayerAllianceChange(IL1I1111,Player(1),ALLIANCE_SHARED_CONTROL)
-call TriggerRegisterPlayerAllianceChange(IL1I1111,Player(2),ALLIANCE_SHARED_CONTROL)
-call TriggerRegisterPlayerAllianceChange(IL1I1111,Player(3),ALLIANCE_SHARED_CONTROL)
-call TriggerRegisterPlayerAllianceChange(IL1I1111,Player(4),ALLIANCE_SHARED_CONTROL)
-call TriggerRegisterPlayerAllianceChange(IL1I1111,Player(5),ALLIANCE_SHARED_CONTROL)
-call TriggerRegisterPlayerAllianceChange(IL1I1111,Player(6),ALLIANCE_SHARED_CONTROL)
-call TriggerRegisterPlayerAllianceChange(IL1I1111,Player(7),ALLIANCE_SHARED_CONTROL)
-call TriggerAddAction(IL1I1111,function I1L1L1II1)
 call I1L1L1LL1()
 set IL1I11L1=CreateTrigger()
 call TriggerRegisterTimerEventSingle(IL1I11L1,0.02)
