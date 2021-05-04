@@ -10699,14 +10699,6 @@ call TriggerAddAction(Pg,function gn)
 endfunction
 function gq takes nothing returns nothing
 local integer Pi=0
-loop
-exitwhen Pi>9
-if Km[Pi]==true then
-call CustomVictoryBJ(ConvertedPlayer(Pi),false,false)
-else
-endif
-set Pi=Pi+1
-endloop
 endfunction
 function gr takes nothing returns nothing
 set Ph=CreateTrigger()
@@ -11055,21 +11047,21 @@ call UnitAddItemByIdSwapped(Pq,GetLastCreatedUnit())
 set bj_forLoopBIndex=bj_forLoopBIndex+1
 endloop
 if hN() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=6
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=25
 else
 if hM() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=5
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=20
 else
 if hL() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=4
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=15
 else
 if hK() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=3
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=10
 else
 if hJ() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=2
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=6
 else
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=1
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=3
 endif
 endif
 endif
@@ -13190,12 +13182,8 @@ endif
 return true
 endfunction
 function ka takes nothing returns nothing
-call CreateFogModifierRectBJ(true,GetEnumPlayer(),FOG_OF_WAR_VISIBLE,GetPlayableMapRect())
-set QT[GetConvertedPlayerId(GetEnumPlayer())]=GetLastCreatedFogModifier()
 endfunction
 function kb takes nothing returns nothing
-call FogModifierStop(QT[GetConvertedPlayerId(GetEnumPlayer())])
-call CreateFogModifierRectBJ(true,GetEnumPlayer(),FOG_OF_WAR_MASKED,GetPlayableMapRect())
 endfunction
 function kc takes nothing returns nothing
 call ForForce(GetPlayersAll(),function kN)
@@ -15859,37 +15847,37 @@ endif
 return true
 endfunction
 function oE takes nothing returns boolean
-if not (GetRandomInt(1,6)==6) then
+if not (GetRandomInt(4,6)==6) then
 return false
 endif
 return true
 endfunction
 function oF takes nothing returns boolean
-if not (GetRandomInt(1,6)==5) then
+if not (GetRandomInt(4,6)==5) then
 return false
 endif
 return true
 endfunction
 function oG takes nothing returns boolean
-if not (GetRandomInt(1,6)==4) then
+if not (GetRandomInt(4,6)==4) then
 return false
 endif
 return true
 endfunction
 function oH takes nothing returns boolean
-if not (GetRandomInt(1,6)==3) then
+if not (GetRandomInt(1,3)==3) then
 return false
 endif
 return true
 endfunction
 function oI takes nothing returns boolean
-if not (GetRandomInt(1,6)==2) then
+if not (GetRandomInt(1,3)==2) then
 return false
 endif
 return true
 endfunction
 function oJ takes nothing returns boolean
-if not (GetRandomInt(1,6)==1) then
+if not (GetRandomInt(1,3)==1) then
 return false
 endif
 return true
@@ -16428,8 +16416,6 @@ endif
 endfunction
 function o9 takes nothing returns nothing
 local integer Pi=1
-call FogEnableOn()
-call FogMaskEnableOn()
 call SetUserControlForceOff(GetPlayersAll())
 call InitHashtableBJ()
 set Rg=GetLastCreatedHashtableBJ()
@@ -17632,12 +17618,8 @@ endif
 return true
 endfunction
 function qn takes nothing returns nothing
-call CreateFogModifierRectBJ(true,GetEnumPlayer(),FOG_OF_WAR_VISIBLE,DU)
-set QT[GetConvertedPlayerId(GetEnumPlayer())]=GetLastCreatedFogModifier()
 endfunction
 function qo takes nothing returns nothing
-call FogModifierStop(QT[GetConvertedPlayerId(GetEnumPlayer())])
-call CreateFogModifierRectBJ(true,GetEnumPlayer(),FOG_OF_WAR_MASKED,GetPlayableMapRect())
 endfunction
 function qp takes nothing returns boolean
 if not (ON[GetConvertedPlayerId(GetEnumPlayer())]==true) then
@@ -21956,25 +21938,21 @@ endif
 if TZ==$41304941 then
 if GetUnitLevel(Td)<5 then
 call SetUnitExploded(Td,true)
-call KillUnit(Td)
 endif
 endif
 if TZ==$41313641 then
 if GetUnitLevel(Td)<5 and GetRandomInt(1,100)<=5 then
 call SetUnitExploded(Td,true)
-call KillUnit(Td)
 endif
 endif
 if TZ==$41313644 then
 if GetUnitLevel(Td)<5 and GetRandomInt(1,100)<=10 then
 call SetUnitExploded(Td,true)
-call KillUnit(Td)
 endif
 endif
 if TZ==$4131484A then
 if GetUnitLevel(Td)<5 and GetRandomInt(1,100)<=50 then
 call SetUnitExploded(Td,true)
-call KillUnit(Td)
 endif
 endif
 if ee(TU,$49303947) then
@@ -26748,7 +26726,7 @@ endif
 return true
 endfunction
 function z6 takes nothing returns boolean
-if not (GetRandomInt(1,100)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
 return false
 endif
 return true
@@ -26760,7 +26738,7 @@ endif
 return true
 endfunction
 function z8 takes nothing returns boolean
-if not (GetRandomInt(1,100)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
 return false
 endif
 return true
@@ -26772,7 +26750,7 @@ endif
 return true
 endfunction
 function BBB takes nothing returns boolean
-if not (GetRandomInt(1,100)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
 return false
 endif
 return true
@@ -26784,7 +26762,7 @@ endif
 return true
 endfunction
 function BBD takes nothing returns boolean
-if not (GetRandomInt(1,100)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
 return false
 endif
 return true
@@ -26796,7 +26774,7 @@ endif
 return true
 endfunction
 function BBF takes nothing returns boolean
-if not (GetRandomInt(1,100)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
 return false
 endif
 return true
@@ -27532,7 +27510,6 @@ call FlushChildHashtable(Rg,Hy)
 call GroupClear(K0[GetPlayerId(GetOwningPlayer(HD))])
 call PauseTimer(Hu)
 call DestroyTimer(Hu)
-call KillUnit(Ts)
 endif
 set HD=null
 set VX=null
@@ -55336,6 +55313,27 @@ call SetPlayerRacePreference(Player(11),RACE_PREF_UNDEAD)
 call SetPlayerRaceSelectable(Player(11),false)
 call SetPlayerController(Player(11),MAP_CONTROL_COMPUTER)
 endfunction
+function SwapControlEnable takes nothing returns nothing
+	local integer numberOfPlayer=9
+	local integer i=0
+	local integer j=0
+	
+    loop
+    exitwhen i>numberOfPlayer
+		set j=0
+
+		loop
+		exitwhen j>numberOfPlayer
+			if i!=j then
+				call SetPlayerAllianceStateVisionBJ(Player(i),Player(j),true)
+				call SetPlayerAllianceStateFullControlBJ(Player(i),Player(j),true)
+			endif
+			set j=j+1
+		endloop
+		
+		set i=i+1
+    endloop
+endfunction
 function BqY takes nothing returns nothing
 call SetPlayerTeam(Player(0),0)
 call SetPlayerTeam(Player(1),0)
@@ -55437,6 +55435,7 @@ call SetPlayerAllianceStateAllyBJ(Player(9),Player(5),true)
 call SetPlayerAllianceStateAllyBJ(Player(9),Player(6),true)
 call SetPlayerAllianceStateAllyBJ(Player(9),Player(7),true)
 call SetPlayerAllianceStateAllyBJ(Player(9),Player(8),true)
+call SwapControlEnable()
 call SetPlayerTeam(Player(10),1)
 call SetPlayerTeam(Player(11),1)
 call SetPlayerAllianceStateAllyBJ(Player(10),Player(11),true)
