@@ -11967,15 +11967,9 @@ if(L1I1IL1I())then
 call CustomVictoryBJ(GetOwningPlayer(GetManipulatingUnit()),false,false)
 else
 call TriggerSleepAction(0.10)
-if(L1I1IILI())then
-if(L1I1I1II())then
-call RemoveItem(GetManipulatedItem())
-call CustomVictoryBJ(GetOwningPlayer(GetManipulatingUnit()),false,false)
-call RemoveUnit(GetManipulatingUnit())
-else
+if true then
 call SetItemPlayer(GetManipulatedItem(),GetOwningPlayer(GetManipulatingUnit()),true)
 call SetItemUserData(GetManipulatedItem(),GetConvertedPlayerId(GetOwningPlayer(GetManipulatingUnit())))
-endif
 else
 if(L1I1IIII())then
 else
@@ -12012,8 +12006,6 @@ endfunction
 function L1I1L1II takes nothing returns nothing
 if(L1I1L11I())then
 else
-call DisplayTimedTextToForce(II11LI1I(GetTriggerPlayer()),15.00,("|cFFC0C000Этот предмет принадлежит игроку|r "+("|cFFC0C000"+(GetPlayerName(GetItemPlayer(GetManipulatedItem()))+"|r"))))
-call UnitRemoveItemSwapped(GetManipulatedItem(),GetManipulatingUnit())
 endif
 endfunction
 function L1I1LI1I takes nothing returns nothing
@@ -20781,7 +20773,7 @@ call KillUnit(GroupPickRandomUnit(II11L11I(0x6F303043)))
 endfunction
 function I1ILI1LI1 takes nothing returns nothing
 call DisableTrigger(GetTriggeringTrigger())
-call TriggerSleepAction(1800.00)
+call TriggerSleepAction(18000000.00)
 call EnableTrigger(IILLL111)
 call DisplayTimedTextToForce(GetPlayersAll(),30,"|cFFFF0000Служитель тьмы взялся за убийство героев!|r")
 call CreateNUnitsAtLocFacingLocBJ(1,0x68303133,Player(8),GetRectCenter(IIILI1I),GetUnitLoc(GetTriggerUnit()))
