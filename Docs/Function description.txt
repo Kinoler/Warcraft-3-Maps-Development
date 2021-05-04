@@ -14,8 +14,10 @@ function SwapControlEnable takes nothing returns nothing
 
 		loop
 		exitwhen j>numberOfPlayer
-			call SetPlayerAllianceStateVisionBJ(Player(i),Player(j),true) - Чтобы передача контроля в меню была доступна
-			call SetPlayerAllianceStateFullControlBJ(Player(i),Player(j),true) - Чтобы иконки героев всех игроков отображались слева
+			if (i != j) then
+				call SetPlayerAllianceStateVisionBJ(Player(i),Player(j),true) - Чтобы передача контроля в меню была доступна
+				call SetPlayerAllianceStateFullControlBJ(Player(i),Player(j),true) - Чтобы иконки героев всех игроков отображались слева
+			endif
 			
 			set j=j+1
 		endloop
