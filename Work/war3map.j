@@ -10821,7 +10821,7 @@ endif
 return true
 endfunction
 function g9 takes nothing returns nothing
-if g8() then
+if false then
 call QuestMessageBJ(GetForceOfPlayer(GetTriggerPlayer()),bj_QUESTMESSAGE_SECRET,"|c00FF0000Ваш герой ещё жив, его нельзя сохранить!|r")
 else
 set bj_forLoopAIndex=1
@@ -13786,7 +13786,7 @@ endfunction
 function lC takes nothing returns nothing
 call TriggerSleepAction(.01)
 if k8() then
-if k7() then
+if false then
 call DisplayTextToForce(GetForceOfPlayer(GetTriggerPlayer()),"                                                       Нельзя сохранить живого героя!")
 else
 if k6() then
