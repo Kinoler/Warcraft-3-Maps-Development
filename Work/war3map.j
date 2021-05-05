@@ -16942,36 +16942,36 @@ call DestroyEffect(GetLastCreatedEffectBJ())
 call SetPlayerAllianceBJ(GetOwningPlayer(GetTriggerUnit()),ALLIANCE_SHARED_VISION,true,Player(11))
 call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),NC)
 if pX() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=11
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=30
 else
 if pW() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=10
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=25
 else
 if pV() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=9
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=22
 else
 if pU() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=8
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=20
 else
 if pT() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=7
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=18
 else
 if pS() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=6
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=16
 else
 if pR() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=5
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=14
 else
 if pQ() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=4
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=12
 else
 if pP() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=3
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=9
 else
 if pO() then
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=2
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=6
 else
-set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=1
+set KE[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=3
 endif
 endif
 endif
