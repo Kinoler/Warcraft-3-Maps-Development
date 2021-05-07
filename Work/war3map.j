@@ -26709,7 +26709,7 @@ endif
 return true
 endfunction
 function z6 takes nothing returns boolean
-if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*3) then
 return false
 endif
 return true
@@ -26721,7 +26721,7 @@ endif
 return true
 endfunction
 function z8 takes nothing returns boolean
-if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*3) then
 return false
 endif
 return true
@@ -26733,7 +26733,7 @@ endif
 return true
 endfunction
 function BBB takes nothing returns boolean
-if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*3) then
 return false
 endif
 return true
@@ -26745,7 +26745,7 @@ endif
 return true
 endfunction
 function BBD takes nothing returns boolean
-if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*3) then
 return false
 endif
 return true
@@ -26757,7 +26757,7 @@ endif
 return true
 endfunction
 function BBF takes nothing returns boolean
-if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*3) then
 return false
 endif
 return true
@@ -26805,7 +26805,7 @@ endif
 return true
 endfunction
 function BBN takes nothing returns boolean
-if not (GetRandomInt(1,100)<=2) then
+if not (GetRandomInt(1,100)<=10) then
 return false
 endif
 return true
