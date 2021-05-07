@@ -15847,37 +15847,37 @@ endif
 return true
 endfunction
 function oE takes nothing returns boolean
-if not (GetRandomInt(4,6)==6) then
+if not (GetRandomInt(5,6)==6) then
 return false
 endif
 return true
 endfunction
 function oF takes nothing returns boolean
-if not (GetRandomInt(4,6)==5) then
+if not (GetRandomInt(5,6)==5) then
 return false
 endif
 return true
 endfunction
 function oG takes nothing returns boolean
-if not (GetRandomInt(4,6)==4) then
+if not (GetRandomInt(3,4)==4) then
 return false
 endif
 return true
 endfunction
 function oH takes nothing returns boolean
-if not (GetRandomInt(1,3)==3) then
+if not (GetRandomInt(3,4)==3) then
 return false
 endif
 return true
 endfunction
 function oI takes nothing returns boolean
-if not (GetRandomInt(1,3)==2) then
+if not (GetRandomInt(1,2)==2) then
 return false
 endif
 return true
 endfunction
 function oJ takes nothing returns boolean
-if not (GetRandomInt(1,3)==1) then
+if not (GetRandomInt(1,2)==1) then
 return false
 endif
 return true
@@ -22077,24 +22077,7 @@ set T8=CreateTrigger()
 call TriggerAddAction(T8,function tp)
 endfunction
 function tr takes nothing returns nothing
-set MP=MP-MR
-set MR=0
-set bj_forLoopAIndex=1
-set bj_forLoopAIndexEnd=10
-loop
-exitwhen bj_forLoopAIndex>bj_forLoopAIndexEnd
-set MR=MR+MD[GetForLoopIndexA()]
-if MR>20 then
-set MR=20
-else
-endif
-set bj_forLoopAIndex=bj_forLoopAIndex+1
-endloop
-set MP=MP+MR
-if MP>20 then
-set MP=20
-else
-endif
+set MP=40
 endfunction
 function ts takes nothing returns nothing
 set UB=CreateTrigger()
@@ -22112,7 +22095,7 @@ local integer G4
 local integer H9=0
 set UD=GetOwningPlayer(GetTriggerUnit())
 set G4=GetConvertedPlayerId(UD)
-set MD[G4]=MD[G4]-MZ[G4]
+set MD[G4]=40
 set MZ[G4]=0
 set bj_forLoopAIndex=0
 set bj_forLoopAIndexEnd=5
@@ -22140,7 +22123,7 @@ endloop
 endif
 set bj_forLoopAIndex=bj_forLoopAIndex+1
 endloop
-set MD[G4]=MD[G4]+MZ[G4]
+set MD[G4]=40
 call tr()
 endfunction
 function tv takes nothing returns nothing
@@ -24342,7 +24325,7 @@ set bj_forLoopAIndexEnd=10
 loop
 exitwhen bj_forLoopAIndex>bj_forLoopAIndexEnd
 if wt() then
-set MD[G4]=MD[G4]-(GetForLoopIndexB()+1)
+set MD[G4]=40
 set MZ[G4]=MZ[G4]-(GetForLoopIndexB()+1)
 else
 endif
