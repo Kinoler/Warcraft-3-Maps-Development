@@ -13493,9 +13493,6 @@ exitwhen Qn>25
 set Qo[Qn]=MI[Qn+(Qg-1)*100]
 set Qn=Qn+1
 endloop
-if S2I(Qo[1])>S2I(Qo[4])*1000 then
-set Qo[1]=I2S(S2I(Qo[4])*1000)
-endif
 set Qo[90]=I2S(S2I(Qo[1])+1)
 set Qo[91]=Qo[91]+Qo[90]
 set Qo[98]=Qo[98]+I2RAW(S2I(Qo[90]),Qe)+"-"
