@@ -589,6 +589,7 @@ boolean array PP
 boolean array PQ
 boolean array PR
 boolean PS=false
+boolean timerStopped=false
 player T3=null
 unit de=null
 timer array PT
@@ -5325,24 +5326,8 @@ local integer Q2=GetHeroLevel(Qz[H9])
 local unit Q4=QG[H9]
 local boolean Q3=false
 local integer IR=0
-if Q2>=95 then
 set QG[H9]=ReplaceUnitBJ(QG[H9],$68303358,bj_UNIT_STATE_METHOD_RELATIVE)
 set Q3=true
-elseif Q2>=80 then
-set QG[H9]=ReplaceUnitBJ(QG[H9],$68303357,bj_UNIT_STATE_METHOD_RELATIVE)
-set Q3=true
-elseif Q2>=65 then
-set QG[H9]=ReplaceUnitBJ(QG[H9],$68303251,bj_UNIT_STATE_METHOD_RELATIVE)
-set Q3=true
-elseif Q2>=50 then
-set QG[H9]=ReplaceUnitBJ(QG[H9],$68303250,bj_UNIT_STATE_METHOD_RELATIVE)
-set Q3=true
-elseif Q2>=35 then
-set QG[H9]=ReplaceUnitBJ(QG[H9],$6830324F,bj_UNIT_STATE_METHOD_RELATIVE)
-set Q3=true
-else
-set Q3=true
-endif
 if Q3 then
 call SetUnitInvulnerable(QG[H9],true)
 call SetUnitOwner(QG[H9],ConvertedPlayer(H9),true)
@@ -11933,6 +11918,24 @@ return false
 endif
 return true
 endfunction
+function IsStartTimer takes nothing returns boolean
+if not (timerStopped==true) then
+return false
+endif
+if not (GetEventPlayerChatString()=="-start") then
+return false
+endif
+return true
+endfunction
+function IsStopTimer takes nothing returns boolean
+if not (timerStopped==false) then
+return false
+endif
+if not (GetEventPlayerChatString()=="-stop") then
+return false
+endif
+return true
+endfunction
 function is takes nothing returns boolean
 if not (PS==false) then
 return false
@@ -12440,6 +12443,22 @@ call PauseTimerBJ(false,Ox)
 return
 else
 endif
+
+if IsStopTimer() then
+call DisplayTextToForce(GetPlayersAll(),"|c000080FFЛидер экспедиции отключил таймер волн! Команда -start включит таймер старта.|r")
+set timerStopped=true
+call PauseTimerBJ(true,Nv)
+return
+else
+endif
+if IsStartTimer() then
+call DisplayTextToForce(GetPlayersAll(),"|c000080FFЛидер экспедиции включил таймер волн.|r")
+set timerStopped=false
+call PauseTimerBJ(false,Nv)
+return
+else
+endif
+
 else
 endif
 if ix() then
