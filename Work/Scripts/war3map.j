@@ -499,7 +499,8 @@ set gg_rct_Boss51o3=Rect(18016.0,-11968.0,19456.0,-10368.0)set gg_rct_Boss52o2=
 set we=AddWeatherEffect(gg_rct_Boss57o2,'FDbh')call EnableWeatherEffect(we,true)set gg_rct_Boss55o1=Rect(-14880.0,-3936.0,-14272.0,-3552.0)set gg_rct_Boss56o1=Rect(-20896.0,-16128.0,-20288.0,-15616.0)set gg_rct_Boss58o1=Rect(-20896.0,-14592.0,-20288.0,-14080.0)set gg_rct_raid4MM=Rect(-19936.0,-15264.0,-19520.0,-14912.0)
 set gg_rct_Boss57o1=Rect(-20896.0,-15360.0,-20288.0,-14848.0)endfunctionfunction PreloadFiles takes nothing returns nothinglocal integer i=11if ReloadGameCachesFromDisk()thenloop
 call SetPlayerName(Player(i),"This map cannot be played in single player.")exitwhen i==0set i=i-1endloopcall EndGame(true)endifendfunctionfunction itemdrop2 takes integer u1,integer u2,integer u3,real dr,integer db,integer dloop,integer i1,integer c1,real r1,integer i2,integer c2,real r2,integer i3,integer c3,real r3,integer i4,integer c4,real r4,integer i5,integer c5,real r5,integer i6,integer c6,real r6,integer e,location l,boolean bo,string s,player p returns nothing
-local integer loopA=1local real random=0if GetUnitTypeId(GetDyingUnit())==u1 or GetUnitTypeId(GetDyingUnit())==u2 or GetUnitTypeId(GetDyingUnit())==u3 thenset dr=dr*(1.00+(db*0.01))loop
+local integer loopA=1local real random=0if GetUnitTypeId(GetDyingUnit())==u1 or GetUnitTypeId(GetDyingUnit())==u2 or GetUnitTypeId(GetDyingUnit())==u3 thenset dr=dr*(1.00+(db*0.01))+40.00
+set dloop=dloop+5loop
 exitwhen loopA>dloop
 if GetRandomReal(0,100)<=dr then
 if bo==true then
@@ -3440,7 +3441,7 @@ endifreturn trueendfunctionfunction Trig_Monster_Death_Func010Func002Func007C
 if(not(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]<1500))thenreturn false
 endifif(not(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]>=160))thenreturn false
 endifreturn trueendfunctionfunction Trig_Monster_Death_Func010Func002A takes nothing returns nothingcall AdjustPlayerStateBJ(2000,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_LUMBER)call CreateItemLoc(('π<Kw'+'U‹∆ì'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,2))call SetItemPlayerBJ(GetLastCreatedItem(),GetOwningPlayer(GetManipulatingUnit()),true)call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemPlayerBJ(GetLastCreatedItem(),GetOwningPlayer(GetManipulatingUnit()),true)call SetItemUserData(GetLastCreatedItem(),1)
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),"               Í∞úÏù∏ Î≥¥ÏÉÅÏùÄ Ï∞ΩÍ≥†Ïóê ÏÉùÏÑ±Îê©ÎãàÎã§.
                Ï†ïÎ≥µÏûê Î†àÎ≤® +4 Ï¶ùÍ∞ÄÎê©ÎãàÎã§. (ÏµúÎåÄ 1500)
                ÎÇòÎ¨¥ +2000Í∞ú")
@@ -3471,7 +3472,7 @@ endifreturn trueendfunctionfunction Trig_Monster_Death_Func011Func003Func007C
 if(not(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]<3000))thenreturn false
 endifif(not(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]>=1500))thenreturn false
 endifreturn trueendfunctionfunction Trig_Monster_Death_Func011Func003A takes nothing returns nothingcall AdjustPlayerStateBJ(2000,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_LUMBER)call CreateItemLoc(('f∂œ9'+'ß|©'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,5))call SetItemPlayerBJ(GetLastCreatedItem(),GetOwningPlayer(GetManipulatingUnit()),true)call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemPlayerBJ(GetLastCreatedItem(),GetOwningPlayer(GetManipulatingUnit()),true)call SetItemUserData(GetLastCreatedItem(),1)
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),"               Í∞úÏù∏ Î≥¥ÏÉÅÏùÄ Ï∞ΩÍ≥†Ïóê ÏÉùÏÑ±Îê©ÎãàÎã§.
                Ï†ïÎ≥µÏûê Î†àÎ≤® +3 Ï¶ùÍ∞ÄÎê©ÎãàÎã§. (ÏµúÎåÄ 3000)
                ÎÇòÎ¨¥ +2000Í∞ú")
@@ -3518,13 +3519,13 @@ call CreateNUnitsAtLoc(1,('“MÔ6'+'@Âf'),Player(PLAYER_NEUTRAL_AGGRESSIVE),udg_A
 endifif(Trig_Monster_Death_Func007Func007C())then
 call CreateNUnitsAtLoc(1,('¨®óà'+'≥ä{æ'),Player(PLAYER_NEUTRAL_AGGRESSIVE),udg_ALocation[12],bj_UNIT_FACING)call AddHeroXPSwapped(24000,udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],true)call CreateItemLoc(('êä$'+'ç◊Ê'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call AdjustPlayerStateBJ(1000,GetOwningPlayer(GetKillingUnitBJ()),PLAYER_STATE_RESOURCE_LUMBER)else
 endifif(Trig_Monster_Death_Func007Func008C())then
-call CreateNUnitsAtLoc(1,('ŒÓGç'+'Z)ò'),Player(PLAYER_NEUTRAL_AGGRESSIVE),udg_ALocation[12],bj_UNIT_FACING)call AddHeroXPSwapped(30000,udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],true)call CreateItemLoc(('RßkÏ'+'À∫üD'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,2))call AdjustPlayerStateBJ(1000,GetOwningPlayer(GetKillingUnitBJ()),PLAYER_STATE_RESOURCE_LUMBER)else
+call CreateNUnitsAtLoc(1,('ŒÓGç'+'Z)ò'),Player(PLAYER_NEUTRAL_AGGRESSIVE),udg_ALocation[12],bj_UNIT_FACING)call AddHeroXPSwapped(30000,udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],true)call CreateItemLoc(('RßkÏ'+'À∫üD'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),20)call AdjustPlayerStateBJ(1000,GetOwningPlayer(GetKillingUnitBJ()),PLAYER_STATE_RESOURCE_LUMBER)else
 endifif(Trig_Monster_Death_Func007Func009C())then
-call CreateNUnitsAtLoc(1,('¬–!b'+'P9˝”'),Player(PLAYER_NEUTRAL_AGGRESSIVE),udg_ALocation[12],bj_UNIT_FACING)call AddHeroXPSwapped(30000,udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],true)call CreateItemLoc(('ªÇê'+'aMâ†'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,3))call AdjustPlayerStateBJ(1000,GetOwningPlayer(GetKillingUnitBJ()),PLAYER_STATE_RESOURCE_LUMBER)set udg_ALocation[12]=GetRandomLocInRect(gg_rct_Key1)call CreateNUnitsAtLoc(1,'hdhw',Player(PLAYER_NEUTRAL_AGGRESSIVE),udg_ALocation[12],bj_UNIT_FACING)call UnitApplyTimedLifeBJ(1.70,'BTLF',GetLastCreatedUnit())call SetUnitUserData(GetLastCreatedUnit(),11)call RemoveLocation(udg_ALocation[12])else
+call CreateNUnitsAtLoc(1,('¬–!b'+'P9˝”'),Player(PLAYER_NEUTRAL_AGGRESSIVE),udg_ALocation[12],bj_UNIT_FACING)call AddHeroXPSwapped(30000,udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],true)call CreateItemLoc(('ªÇê'+'aMâ†'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),20)call AdjustPlayerStateBJ(1000,GetOwningPlayer(GetKillingUnitBJ()),PLAYER_STATE_RESOURCE_LUMBER)set udg_ALocation[12]=GetRandomLocInRect(gg_rct_Key1)call CreateNUnitsAtLoc(1,'hdhw',Player(PLAYER_NEUTRAL_AGGRESSIVE),udg_ALocation[12],bj_UNIT_FACING)call UnitApplyTimedLifeBJ(1.70,'BTLF',GetLastCreatedUnit())call SetUnitUserData(GetLastCreatedUnit(),11)call RemoveLocation(udg_ALocation[12])else
 endifif(Trig_Monster_Death_Func007Func010C())then
 set udg_AGroup[12]=GetUnitsInRectMatching(gg_rct_Key1,Condition(function Trig_Monster_Death_Func007Func010Func001002002))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death_Func007Func010Func002002)
-call DestroyGroup(udg_AGroup[12])call AddHeroXPSwapped(30000,udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],true)call CreateItemLoc(('‘¢~æ'+'Iøår'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,3))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemPlayerBJ(GetLastCreatedItem(),GetOwningPlayer(GetManipulatingUnit()),true)call CreateItemLoc(('Ò∆e£'+'≥∏•'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,5))call AdjustPlayerStateBJ(1000,GetOwningPlayer(GetKillingUnitBJ()),PLAYER_STATE_RESOURCE_LUMBER)if(Trig_Monster_Death_Func007Func010Func013C())thenset udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]+7)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetKillingUnitBJ())),"          Ï†ïÎ≥µÏûê Î†àÎ≤® +7 Ï¶ùÍ∞Ä ÌñàÏäµÎãàÎã§.
+call DestroyGroup(udg_AGroup[12])call AddHeroXPSwapped(30000,udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],true)call CreateItemLoc(('‘¢~æ'+'Iøår'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemPlayerBJ(GetLastCreatedItem(),GetOwningPlayer(GetManipulatingUnit()),true)call CreateItemLoc(('Ò∆e£'+'≥∏•'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),20)call AdjustPlayerStateBJ(1000,GetOwningPlayer(GetKillingUnitBJ()),PLAYER_STATE_RESOURCE_LUMBER)if(Trig_Monster_Death_Func007Func010Func013C())thenset udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]+7)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetKillingUnitBJ())),"          Ï†ïÎ≥µÏûê Î†àÎ≤® +7 Ï¶ùÍ∞Ä ÌñàÏäµÎãàÎã§.
           ( ÏµúÎåÄ Ï†ïÎ≥µÏûê Î†àÎ≤® 600 ÍπåÏßÄ Ïò¨Î¶¥ Ïàò ÏûàÏäµÎãàÎã§.)")else
 endifset udg_location=GetPlayerStartLocationLoc(Player(11))call SetUnitPositionLoc(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],udg_location)call RemoveLocation(udg_location)set udg_location=GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ()))call PanCameraToTimedLocForPlayer(GetOwningPlayer(GetKillingUnitBJ()),udg_location,0.10)
 call RemoveLocation(udg_location)else
@@ -3879,7 +3880,7 @@ endfunctionfunction Trig_Monster_Death2_Func007Func001Func001Func003002002 take
 endifreturn trueendfunctionfunction Trig_Monster_Death2_Func007Func001Func001Func004Func005C takes nothing returns booleanif(not(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]<10000))thenreturn false
 endifreturn trueendfunctionfunction Trig_Monster_Death2_Func007Func001Func001Func004A takes nothing returns nothing
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Í∞úÏù∏Ï∞ΩÍ≥†Ïóê ÌÅ¥Î¶¨Ïñ¥ Î≥¥ÏÉÅÏù¥ ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§."))call CreateItemLoc(('„uê…'+'4—äp'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(2,3))call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
 if(Trig_Monster_Death2_Func007Func001Func001Func004Func005C())thenif(Trig_Monster_Death2_Func007Func001Func001Func004Func005Func002C())thenset udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]+10)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Ï†ïÎ≥µÏûê Î†àÎ≤® +10 Ï¶ùÍ∞ÄÎê©ÎãàÎã§. (Ï†ïÎ≥µÏûê Î†àÎ≤® 10000ÍπåÏßÄ)"))
 else
 set udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]+20)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Ï†ïÎ≥µÏûê Î†àÎ≤® +20 Ï¶ùÍ∞ÄÎê©ÎãàÎã§. (Ï†ïÎ≥µÏûê Î†àÎ≤® 9000ÍπåÏßÄ)"))endifelse
@@ -3906,9 +3907,9 @@ endfunctionfunction Trig_Monster_Death2_Func009Func001Func002Func002002002 take
 call AdjustPlayerStateBJ(500,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_LUMBER)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          ÎÇòÎ¨¥ 500Í∞ú Í∞úÏù∏ Î≥¥ÏÉÅ."))
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Í∞úÏù∏Ï∞ΩÍ≥†Ïóê Ìé´ ÌïòÍ∏â Î®πÏù¥Í∞Ä ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§."))call CreateItemLoc(('á¢là'+'ıò—}'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
 call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)call CreateItemLoc(('ÕõÙó'+'ØüIn'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
+call SetItemCharges(GetLastCreatedItem(),10)call CreateItemLoc(('ÕõÙó'+'ØüIn'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
 call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)endfunctionfunction Trig_Monster_Death2_Func009Func001Func002Func005001 takes nothing returns booleanreturn(GetRandomInt(1,4)==2)
+call SetItemCharges(GetLastCreatedItem(),10)endfunctionfunction Trig_Monster_Death2_Func009Func001Func002Func005001 takes nothing returns booleanreturn(GetRandomInt(1,4)==2)
 endfunctionfunction Trig_Monster_Death2_Func009Func001Func002Func010001 takes nothing returns booleanreturn(GetRandomInt(1,5)==1)
 endfunctionfunction Trig_Monster_Death2_Func009Func001Func002Func013001 takes nothing returns booleanreturn(GetRandomInt(1,5)==1)
 endfunctionfunction Trig_Monster_Death2_Func009Func001Func002Func016001 takes nothing returns booleanreturn(GetRandomInt(1,5)==1)
@@ -3929,7 +3930,7 @@ endfunctionfunction Trig_Monster_Death2_Func010Func001Func002Func002002002002 t
 return(IsUnitType(GetFilterUnit(),UNIT_TYPE_DEAD)!=true)
 endfunctionfunction Trig_Monster_Death2_Func010Func001Func002Func002002002 takes nothing returns booleanreturn GetBooleanAnd((IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true),(IsUnitType(GetFilterUnit(),UNIT_TYPE_DEAD)!=true))endfunctionfunction Trig_Monster_Death2_Func010Func001Func002Func003A takes nothing returns nothing
 call AdjustPlayerStateBJ(5000,GetOwningPlayer(GetEnumUnit()),PLAYER_STATE_RESOURCE_LUMBER)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          ÎÇòÎ¨¥ 5000Í∞ú Í∞úÏù∏ Î≥¥ÏÉÅ."))call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Í∞úÏù∏Ï∞ΩÍ≥†Ïóê Ìé´ ÌïòÍ∏â Î®πÏù¥ 6Í∞ú ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§."))call CreateItemLoc(('$úó–'+'Xü¶5'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(6,7))call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
 endfunctionfunction Trig_Monster_Death2_Func010Func001Func002Func005001 takes nothing returns booleanreturn(GetRandomInt(1,5)==2)
 endfunctionfunction Trig_Monster_Death2_Func010Func001Func002Func010001 takes nothing returns booleanreturn(GetRandomInt(1,5)==1)
 endfunctionfunction Trig_Monster_Death2_Func010Func001Func002Func013001 takes nothing returns booleanreturn(GetRandomInt(1,5)==1)
@@ -3959,9 +3960,9 @@ endfunctionfunction Trig_Monster_Death2_Func012Func001Func002Func002002002 take
 endifif(not(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]>=160))thenreturn false
 endifreturn trueendfunctionfunction Trig_Monster_Death2_Func012Func001Func002Func003A takes nothing returns nothing
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Í∞úÏù∏Ï∞ΩÍ≥†Ïóê Ìé´ Ï§ëÍ∏â Î®πÏù¥Í∞Ä ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§."))call CreateItemLoc(('ßç‘'+'Ä¬7A'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),6)call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),10)call SetItemUserData(GetLastCreatedItem(),1)
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Í∞úÏù∏Ï∞ΩÍ≥†Ïóê ÏÉÅÍ∏â Í∞ïÌôî Î¨∏ÏÑúÍ∞Ä ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§."))call CreateItemLoc(('p)'+'˝®·'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),6)call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),10)call SetItemUserData(GetLastCreatedItem(),1)
 if(Trig_Monster_Death2_Func012Func001Func002Func003Func009C())thenset udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]+20)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Ï†ïÎ≥µÏûê Î†àÎ≤® +20 Ï¶ùÍ∞ÄÎê©ÎãàÎã§. (Ï†ïÎ≥µÏûê Î†àÎ≤® 3000ÍπåÏßÄ)"))else
 endifendfunctionfunction Trig_Monster_Death2_Func012Func001Func002Func009001 takes nothing returns booleanreturn(GetRandomInt(1,5)==1)
 endfunctionfunction Trig_Monster_Death2_Func012Func001Func002Func012001 takes nothing returns booleanreturn(GetRandomInt(1,5)==1)
@@ -3987,7 +3988,7 @@ endifif(not(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]>=3
 endifreturn trueendfunctionfunction Trig_Monster_Death2_Func013Func001Func002Func003A takes nothing returns nothing
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Í∞úÏù∏Ï∞ΩÍ≥†Ïóê Ïã†ÎπÑÌïú ÏÉÅÍ∏â Í∞ïÌôî Î¨∏ÏÑúÍ∞Ä ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§."))
 call CreateItemLoc((' Y”Æ'+'Jƒón'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(5,7))call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
 if(Trig_Monster_Death2_Func013Func001Func002Func003Func005C())thenset udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]+20)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Ï†ïÎ≥µÏûê Î†àÎ≤® +20 Ï¶ùÍ∞ÄÎê©ÎãàÎã§. (Ï†ïÎ≥µÏûê Î†àÎ≤® 3000ÍπåÏßÄ)"))else
 endifendfunctionfunction Trig_Monster_Death2_Func013Func001Func002Func008001 takes nothing returns booleanreturn(GetRandomInt(1,5)==1)
 endfunctionfunction Trig_Monster_Death2_Func013Func001Func002Func011001 takes nothing returns booleanreturn(GetRandomInt(1,5)==1)
@@ -4053,7 +4054,7 @@ endifreturn trueendfunctionfunction Trig_Monster_Death2_Func015Func001Func002
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Í∞úÏù∏Ï∞ΩÍ≥†Ïóê ÌÅ¥Î¶¨Ïñ¥ Î≥¥ÏÉÅÏù¥ ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§."))call CreateItemLoc(('ù@Œ'+'¬„`ù'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
 call SetItemUserData(GetLastCreatedItem(),1)
 call CreateItemLoc(('&	Jp'+'æÁ'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(4,6))call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
 if(Trig_Monster_Death2_Func015Func001Func002Func003Func007C())thenset udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]+10)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Ï†ïÎ≥µÏûê Î†àÎ≤® +10 Ï¶ùÍ∞ÄÎê©ÎãàÎã§. (Ï†ïÎ≥µÏûê Î†àÎ≤® 10000ÍπåÏßÄ)"))
 else
 endifif(Trig_Monster_Death2_Func015Func001Func002Func003Func008C())thenset udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]+20)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Ï†ïÎ≥µÏûê Î†àÎ≤® +20 Ï¶ùÍ∞ÄÎê©ÎãàÎã§. (Ï†ïÎ≥µÏûê Î†àÎ≤® 7000ÍπåÏßÄ)"))else
@@ -4179,7 +4180,7 @@ endfunctionfunction Trig_Monster_Death2_Func035Func010002003001 takes nothing r
 endifreturn trueendfunctionfunction Trig_Monster_Death2_Func036Func006002003001001 takes nothing returns booleanreturn(IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true)
 endfunctionfunction Trig_Monster_Death2_Func036Func006002003001002 takes nothing returns booleanreturn(IsUnitType(GetFilterUnit(),UNIT_TYPE_DEAD)!=true)
 endfunctionfunction Trig_Monster_Death2_Func036Func006002003001 takes nothing returns booleanreturn GetBooleanAnd((IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true),(IsUnitType(GetFilterUnit(),UNIT_TYPE_DEAD)!=true))endfunctionfunction Trig_Monster_Death2_Func036Func006002003002 takes nothing returns booleanreturn(GetHeroLevel(GetFilterUnit())<=3000)endfunctionfunction Trig_Monster_Death2_Func036Func006002003 takes nothing returns booleanreturn GetBooleanAnd((GetBooleanAnd((IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true),(IsUnitType(GetFilterUnit(),UNIT_TYPE_DEAD)!=true))),(GetHeroLevel(GetFilterUnit())<=3000))endfunctionfunction Trig_Monster_Death2_Func036Func007A takes nothing returns nothingcall CreateItemLoc(('ŒÔ&ˆ'+'<äˆR'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(9,20))
+call SetItemCharges(GetLastCreatedItem(),20)
 call SetItemUserData(GetLastCreatedItem(),1)
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),"               Í∞úÏù∏ Ï∞ΩÍ≥†Ïóê Ï¶ùÎ™ÖÏùò Ï†ïÎ≥µÏûê ÏòÅÌòºÏÑùÏù¥ ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§.(Í∞úÏù∏Î≥¥ÏÉÅ)")
 endfunctionfunction Trig_Monster_Death2_Func036C takes nothing returns booleanif(not(GetUnitTypeId(GetDyingUnit())==('˙Îÿ§'+'NJü')))thenreturn false
@@ -4424,7 +4425,7 @@ call DisplayTextToForce(GetPlayersAll(),("          Ï£ºÏà†ÏÇ¨Ïùò Î∞© ÌÅ¥Î¶¨Ïñ¥!!
 call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func007Func001Func001Func004A)call DestroyGroup(udg_AGroup[12])set udg_AGroup[12]=GetUnitsInRectMatching(gg_rct_stageG0,Condition(function Trig_Monster_Death2_Func007Func001Func001Func006002002))
 call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func007Func001Func001Func007002)
 call DestroyGroup(udg_AGroup[12])set udg_ALocation[12]=GetRectCenter(gg_rct_stageG0)call CreateItemLoc(('4∂kÆ'+'‰è∞ã'),udg_ALocation[12])
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,3))call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
 call RemoveLocation(udg_ALocation[12])else
 if(Trig_Monster_Death2_Func007Func001Func001Func001C())thenset bj_forLoopAIndex=1set bj_forLoopAIndexEnd=4loop
 exitwhen bj_forLoopAIndex>bj_forLoopAIndexEndcall RemoveLocation(udg_ALocation[12])set udg_ALocation[12]=GetRandomLocInRect(gg_rct_stageG0)
@@ -4612,7 +4613,7 @@ call CreateNUnitsAtLoc(GetRandomInt(((udg_BRound[6]/ 4)+1),(((udg_BRound[6]*1)+5
 call CreateNUnitsAtLoc(GetRandomInt((udg_BRound[6]/ 9),(udg_BRound[6]/ 10)),(':4wª'+'Ê
 æT'),Player(PLAYER_NEUTRAL_AGGRESSIVE),udg_ALocation[12],bj_UNIT_FACING)call CreateNUnitsAtLoc(GetRandomInt(((udg_BRound[6]/ 5)+1),(((udg_BRound[6]*1)+5)/ 3)),('≥jÑ'+'dı∏¥'),Player(PLAYER_NEUTRAL_AGGRESSIVE),udg_ALocation[12],bj_UNIT_FACING)call RemoveLocation(udg_ALocation[12])endifelse
 endifendifif(Trig_Monster_Death2_Func017C())thencall itemdrop(('ˆZ§'+'–'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func017Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('mcou',udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func017Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('mcou',udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc('engs',udg_ALocation[12])
@@ -4635,7 +4636,7 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func017Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func017Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func018C())thencall itemdrop(('“#'+'_0>'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func018Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('pnvl',udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func018Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('pnvl',udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc('silk',udg_ALocation[12])
@@ -4658,7 +4659,7 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func018Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func018Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func019C())thencall itemdrop(('º√J'+'Gõ47'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func019Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('sror',udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func019Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('sror',udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc('rdis',udg_ALocation[12])
@@ -4683,7 +4684,7 @@ call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func020C())thenset udg_AHerointeger[11]=GetRandomInt(9,12)set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1000.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func020Func002002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func020Func003A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func021C())thencall itemdrop(('◊ÑsÙ'+'â≥ŸZ'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func021Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('kymn',udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func021Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('kymn',udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc('shas',udg_ALocation[12])
@@ -4706,7 +4707,7 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func021Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func021Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func022C())thencall itemdrop(('∞≠äﬂ'+'ZÖÎÉ'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func022Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('kpin',udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func022Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('kpin',udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc('tst2',udg_ALocation[12])
@@ -4729,7 +4730,7 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func022Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func022Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func023C())thencall itemdrop(('©fø&'+'fﬁO'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func023Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('rsps',udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func023Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,2)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('rsps',udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc('fgfh',udg_ALocation[12])
@@ -4754,7 +4755,7 @@ call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func024C())thenset udg_AHerointeger[11]=GetRandomInt(9,12)set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1000.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func024Func002002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func024Func003A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func025C())thencall itemdrop(('ç=J'+'ìŸŒ'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func025Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('shar',udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func025Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('shar',udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc('tstr',udg_ALocation[12])
@@ -4780,7 +4781,7 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func025Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func025Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func026C())thencall itemdrop(('Í¯Vó'+'+ÑÀÊ'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func026Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('rst1',udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func026Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc('rst1',udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc('rhe1',udg_ALocation[12])
@@ -4806,7 +4807,7 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func026Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func026Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func027C())thencall itemdrop(('…)L'+'D'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func027Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('∂-≈'+'w
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func027Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('∂-≈'+'w
 ã8'),udg_ALocation[12])
 else
 call DoNothing()
@@ -4833,7 +4834,7 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func027Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func027Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func028C())thencall itemdrop(('o.û'+'ß>ï'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func028Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('†Çäc'+'õÄõı'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func028Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('†Çäc'+'õÄõı'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('rp/S'+'Õ	'),udg_ALocation[12])
@@ -4859,7 +4860,7 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func028Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func028Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func029C())thencall itemdrop(('3hπ'+'H±V'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func029Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('sQÆi'+'√&∆œ'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func029Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('sQÆi'+'√&∆œ'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('PY#='+'∫„(⁄'),udg_ALocation[12])
@@ -4885,7 +4886,7 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func029Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func029Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func030C())thencall itemdrop(('Fqám'+'«Í…°'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),3)if(Trig_Monster_Death2_Func030Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('íÒ‡'+'í-XX'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),10)if(Trig_Monster_Death2_Func030Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('íÒ‡'+'í-XX'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('dg◊—'+'°ÚEG'),udg_ALocation[12])
@@ -4911,14 +4912,14 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func030Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func030Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func031C())thencall itemdrop(('I>HΩ'+'ª3∆î'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-if((GetRandomInt(1,(3+udg_AITEMbonus[1]))==2))thencall SetItemCharges(GetLastCreatedItem(),2)else
+if((GetRandomInt(1,(3+udg_AITEMbonus[1]))==2))thencall SetItemCharges(GetLastCreatedItem(),10)else
 call DoNothing()
 endifcall itemdrop(('€◊¥'+'*LèW'),50.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('ü)Ë'+'}q·H'),80.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func031Func008002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func031Func009A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func032C())thencall itemdrop(('ünÎ<'+'~ôœ'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(2,4))if(Trig_Monster_Death2_Func032Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('»∫¬Î'+'B∏^!'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func032Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('»∫¬Î'+'B∏^!'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('≈LJ
@@ -4945,7 +4946,7 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func032Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func032Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func033C())thencall itemdrop(('&ªm'+'N∑f'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(2,4))if(Trig_Monster_Death2_Func033Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('Ë¡”ÿ'+'Rcùë'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func033Func004C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('Ë¡”ÿ'+'Rcùë'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('o„	:'+'√4G-'),udg_ALocation[12])
@@ -4973,7 +4974,7 @@ call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func034C())thencall itemdrop((' ∂«”'+'ÚRs1'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('=SÆ'+'˝ ì'),90.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('‚6H'+'# '),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(2,4))if(Trig_Monster_Death2_Func034Func008C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('ñb·'+'}Îâ'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func034Func008C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('ñb·'+'}Îâ'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('öe1•'+'~BŸ'),udg_ALocation[12])
@@ -5001,7 +5002,7 @@ call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func035C())thencall itemdrop(('Q“|ì'+'¡6æq'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('>õ>Â'+'˝◊K'),90.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('©qk'+'(}í‡'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(2,4))if(Trig_Monster_Death2_Func035Func008C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('>ÈFI'+'ÕP∏'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func035Func008C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('>ÈFI'+'ÕP∏'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('a†¢'+'¶UmÀ'),udg_ALocation[12])
@@ -5028,13 +5029,13 @@ endifendifcall SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func035Func010002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func035Func011A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func036C())thencall itemdrop(('%“Ñ˛'+'ÊaÊc'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call itemdrop(('·îX…'+'<Õ≤g'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,5))call SetItemUserData(GetLastCreatedItem(),1)
+call itemdrop(('·îX…'+'<Õ≤g'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
 set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1000.00,udg_ALocation[12],Condition(function Trig_Monster_Death2_Func036Func006002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death2_Func036Func007A)
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func037C())thencall itemdrop(('âò'+'#Ä¢Í'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('
 ∫Ù'+'§H'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(2,4))if(Trig_Monster_Death2_Func037Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('X1=r'+'≥2ú'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func037Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('X1=r'+'≥2ú'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('fàáº'+'Ù¥¬'),udg_ALocation[12])
@@ -5088,7 +5089,7 @@ set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],Condit
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func039C())thencall itemdrop(('≠Ωõ'+'eLü'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('º‚Zt'+'SU¿Õ'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(2,4))if(Trig_Monster_Death2_Func039Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('H∫âì'+'3vº±'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func039Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('H∫âì'+'3vº±'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('<∆≈ã'+'ﬂ™äá'),udg_ALocation[12])
@@ -5169,7 +5170,7 @@ endifset udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func040C())thencall itemdrop(('∞∞‡j'+'bXZö'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('äç…Û'+'ÄÌü?'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(2,4))if(Trig_Monster_Death2_Func040Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('$µ˚*'+'É6O'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func040Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('$µ˚*'+'É6O'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('_¿iÓ'+'ºXÌT'),udg_ALocation[12])
@@ -5250,7 +5251,7 @@ endifset udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func041C())thencall itemdrop(('∫ È'+'•	≥Ç'),60.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('¬ÉG'+'˘èÈ¬'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,4))if(Trig_Monster_Death2_Func041Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('W3á∫'+'∆4{p'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func041Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('W3á∫'+'∆4{p'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc((' éÛÑ'+'B‹X“'),udg_ALocation[12])
@@ -5326,7 +5327,7 @@ call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetKillingUnitBJ()))," 
 endifelse
 endifif(Trig_Monster_Death2_Func042C())thencall itemdrop(('«µ—“'+'òo¨ô'),65.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('xùÔ√'+'∑™^v'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,4))if(Trig_Monster_Death2_Func042Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('!ËÃ}'+'˙lçŸ'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func042Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('!ËÃ}'+'˙lçŸ'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('Ì:æÀ'+'ê-g∞'),udg_ALocation[12])
@@ -5397,7 +5398,7 @@ endifset udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func043C())thencall itemdrop(('P‚í'+'õŸ'),65.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop((' µÆl'+'múóÿ'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,4))if(Trig_Monster_Death2_Func043Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('N)£ú'+'ª7¿º'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func043Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('N)£ú'+'ª7¿º'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('ÀuË'+'L˛Y2'),udg_ALocation[12])
@@ -5469,7 +5470,7 @@ endifset udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func044C())thencall itemdrop(('úíö'+'ƒëg—'),65.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('3Ákæ'+'i€Ü'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,4))if(Trig_Monster_Death2_Func044Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('ÿƒˆá'+'VèTª'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func044Func006C())thenset udg_AHerointeger[11]=GetRandomInt(1,3)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('ÿƒˆá'+'VèTª'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('*˘'+'gNY'),udg_ALocation[12])
@@ -5541,7 +5542,7 @@ endifset udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func045C())thencall itemdrop(('Ùºò'+'kgc”'),65.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('AÁÓ±'+'ﬁXr∂'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,4))if(Trig_Monster_Death2_Func045Func006C())thenset udg_AHerointeger[11]=GetRandomInt(2,6)if((udg_AHerointeger[11]<=3))thencall CreateItemLoc('hlst',udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func045Func006C())thenset udg_AHerointeger[11]=GetRandomInt(2,6)if((udg_AHerointeger[11]<=3))thencall CreateItemLoc('hlst',udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==5))thencall CreateItemLoc('rej3',udg_ALocation[12])
@@ -5588,7 +5589,7 @@ endifset udg_AGroup[12]=GetUnitsInRangeOfLocMatching(1200.00,udg_ALocation[12],
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death2_Func046C())thencall itemdrop(('Í¥º'+'u …Ø'),70.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
 call itemdrop(('ËfÍR'+'î‘X'),100.00,GetUnitTypeId(GetDyingUnit()))call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,4))if(Trig_Monster_Death2_Func046Func007C())thenset udg_AHerointeger[11]=GetRandomInt(1,28)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('Ï0¯'+'l˝A'),udg_ALocation[12])
+call SetItemCharges(GetLastCreatedItem(),20)if(Trig_Monster_Death2_Func046Func007C())thenset udg_AHerointeger[11]=GetRandomInt(1,28)if((udg_AHerointeger[11]==1))thencall CreateItemLoc(('Ï0¯'+'l˝A'),udg_ALocation[12])
 else
 call DoNothing()
 endifif((udg_AHerointeger[11]==2))thencall CreateItemLoc(('>wÄ>'+'ÛœÍ#'),udg_ALocation[12])
@@ -5895,7 +5896,7 @@ endifreturn trueendfunctionfunction Trig_Monster_Death3_Func004Func001Func002
 return false
 endifreturn trueendfunctionfunction Trig_Monster_Death3_Func004Func001Func002Func003A takes nothing returns nothing
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Í∞úÏù∏Ï∞ΩÍ≥†Ïóê ÌÅ¥Î¶¨Ïñ¥ Î≥¥ÏÉÅÏù¥ ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§."))call CreateItemLoc(('2.‚√'+'œElg'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(3,6))call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
 if(Trig_Monster_Death3_Func004Func001Func002Func003Func005C())thenif(Trig_Monster_Death3_Func004Func001Func002Func003Func005Func003C())thenif(Trig_Monster_Death3_Func004Func001Func002Func003Func005Func003Func001C())then
 else
 set udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]+3)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Ï†ïÎ≥µÏûê Î†àÎ≤® +3 Ï¶ùÍ∞ÄÎê©ÎãàÎã§. (Ï†ïÎ≥µÏûê Î†àÎ≤® 30000ÍπåÏßÄ)"))endifelse
@@ -5925,9 +5926,9 @@ endifreturn trueendfunctionfunction Trig_Monster_Death3_Func005Func001Func001
 endifreturn trueendfunctionfunction Trig_Monster_Death3_Func005Func001Func001Func004Func008C takes nothing returns booleanif(not(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]<30000))thenreturn false
 endifreturn trueendfunctionfunction Trig_Monster_Death3_Func005Func001Func001Func004A takes nothing returns nothing
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Í∞úÏù∏Ï∞ΩÍ≥†Ïóê ÌÅ¥Î¶¨Ïñ¥ Î≥¥ÏÉÅÏù¥ ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§."))call CreateItemLoc(('.¶£:'+'3‘¨2'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(2,4))call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
 call CreateItemLoc(('Æ≥Ÿ•'+'`U/ä'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(2,5))call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
 if(Trig_Monster_Death3_Func005Func001Func001Func004Func008C())thenif(Trig_Monster_Death3_Func005Func001Func001Func004Func008Func003C())thenset udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]+6)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Ï†ïÎ≥µÏûê Î†àÎ≤® +6 Ï¶ùÍ∞ÄÎê©ÎãàÎã§. (Ï†ïÎ≥µÏûê Î†àÎ≤® 30000ÍπåÏßÄ)"))else
 set udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]+15)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),("          Ï†ïÎ≥µÏûê Î†àÎ≤® +15 Ï¶ùÍ∞ÄÎê©ÎãàÎã§. (Ï†ïÎ≥µÏûê Î†àÎ≤® 15000ÍπåÏßÄ)"))
 endifelse
@@ -6292,9 +6293,9 @@ if(Trig_Monster_Death3_Func005Func001C())thenif(Trig_Monster_Death3_Func005Func
 call DisplayTextToForce(GetPlayersAll(),("          Ï†ÄÍ≤©ÏàòÏùò Î∞© ÌÅ¥Î¶¨Ïñ¥!!"))set udg_AGroup[12]=GetUnitsInRectMatching(gg_rct_Boss44o2,Condition(function Trig_Monster_Death3_Func005Func001Func001Func003002002))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death3_Func005Func001Func001Func004A)call DestroyGroup(udg_AGroup[12])set udg_AGroup[12]=GetUnitsInRectMatching(gg_rct_Boss44o2,Condition(function Trig_Monster_Death3_Func005Func001Func001Func006002002))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death3_Func005Func001Func001Func007002)
 call DestroyGroup(udg_AGroup[12])set udg_ALocation[12]=GetRectCenter(gg_rct_Boss44o3)
 call CreateItemLoc(('ï»Ë¬'+'Ã±h™'),udg_ALocation[12])
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(3,5))call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
 call CreateItemLoc(('@:H‡'+'ŒŒøO'),udg_ALocation[12])
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(1,3))call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),20)call SetItemUserData(GetLastCreatedItem(),1)
 call RemoveLocation(udg_ALocation[12])else
 if(Trig_Monster_Death3_Func005Func001Func001Func001C())thencall RemoveLocation(udg_ALocation[12])set udg_ALocation[12]=GetRandomLocInRect(gg_rct_Boss44o2)call CreateNUnitsAtLoc(1,('ûr'+'G}¬'),Player(PLAYER_NEUTRAL_AGGRESSIVE),udg_ALocation[12],bj_UNIT_FACING)call SetUnitVertexColorBJ(GetLastCreatedUnit(),I2R(GetRandomInt(1,100)),I2R(GetRandomInt(1,100)),I2R(GetRandomInt(1,100)),0)
 call RemoveLocation(udg_ALocation[12])else
@@ -6556,11 +6557,11 @@ endifif(Trig_Monster_Death3_Func015C())thenset udg_AGroup[12]=GetUnitsInRangeO
 call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Death3_Func016C())thenset udg_AGroup[12]=GetUnitsInRangeOfLocMatching(2000.00,udg_ALocation[12],Condition(function Trig_Monster_Death3_Func016Func002002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Death3_Func016Func003A)
 call DestroyGroup(udg_AGroup[12])if(Trig_Monster_Death3_Func016Func005C())thenset udg_AEvent[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]=11
-call CreateItemLoc(('Vd§'+'«·´'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),2)call SetItemUserData(GetLastCreatedItem(),1)
-call CreateItemLoc(('Å47Ü'+'ä˙'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),2)call SetItemUserData(GetLastCreatedItem(),1)
-call CreateItemLoc(('&Ëm'+'qxÌ'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),2)call SetItemUserData(GetLastCreatedItem(),1)
+call CreateItemLoc(('Vd§'+'«·´'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),10)call SetItemUserData(GetLastCreatedItem(),1)
+call CreateItemLoc(('Å47Ü'+'ä˙'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),10)call SetItemUserData(GetLastCreatedItem(),1)
+call CreateItemLoc(('&Ëm'+'qxÌ'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),10)call SetItemUserData(GetLastCreatedItem(),1)
 call CreateItemLoc(('.X·p'+'
-ÊW'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),2)call SetItemUserData(GetLastCreatedItem(),1)
+ÊW'),GetPlayerStartLocationLoc(GetOwningPlayer(GetKillingUnitBJ())))call SetItemCharges(GetLastCreatedItem(),10)call SetItemUserData(GetLastCreatedItem(),1)
 set udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]+22)
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetKillingUnitBJ())),"       - Ïó¨ÎçüÎ≤àÏß∏ ÎØ∏ÏÖò ÏôÑÎ£å! -
  Ï†ïÎ≥µÏûê Î†àÎ≤®+22
@@ -6704,7 +6705,7 @@ endifreturn trueendfunctionfunction Trig_Monster_Deat4_Func009Func008Func004C
 if(not(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]<50000))thenreturn false
 endifreturn trueendfunctionfunction Trig_Monster_Deat4_Func009Func008A takes nothing returns nothingcall CreateItemLoc(('’yS'+'U˜§'),GetPlayerStartLocationLoc(GetOwningPlayer(GetEnumUnit())))
 call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(6,12))
+call SetItemCharges(GetLastCreatedItem(),20)
 if(Trig_Monster_Deat4_Func009Func008Func004C())thenset udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetEnumUnit()))]+11)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetEnumUnit())),"         Î†àÏù¥Îìú Ï†ïÎ≥µÏùò Í∏∞Ïö¥ÏùÑ ÍπÉÎì§Ïñ¥ Ï†ïÎ≥µÏûê Î†àÎ≤®+11 ÎßåÌÅºÏ¶ùÍ∞ÄÌï©ÎãàÎã§.
          ( ÏµúÎåÄ Ï†ïÎ≥µÏûê Î†àÎ≤®50000 ÍπåÏßÄ )")
 else
@@ -6883,7 +6884,7 @@ endifif(Trig_Monster_Deat4_Func009C())thencall CreateItemLoc(('¶ê≤'+'c§KÄ'),u
 call SetItemUserData(GetLastCreatedItem(),1)
 call CreateItemLoc(('ô„+e'+'ë$Úﬁ'),udg_ALocation[12])
 call SetItemUserData(GetLastCreatedItem(),1)
-call SetItemCharges(GetLastCreatedItem(),GetRandomInt(3,6))set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(2000.00,udg_ALocation[12],Condition(function Trig_Monster_Deat4_Func009Func007002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Deat4_Func009Func008A)call DestroyGroup(udg_AGroup[12])else
+call SetItemCharges(GetLastCreatedItem(),20)set udg_AGroup[12]=GetUnitsInRangeOfLocMatching(2000.00,udg_ALocation[12],Condition(function Trig_Monster_Deat4_Func009Func007002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Deat4_Func009Func008A)call DestroyGroup(udg_AGroup[12])else
 endifif(Trig_Monster_Deat4_Func010C())thenset udg_AGroup[12]=GetUnitsInRectMatching(gg_rct_Boss48o2,Condition(function Trig_Monster_Deat4_Func010Func001002002))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Deat4_Func010Func002A)call DestroyGroup(udg_AGroup[12])if(Trig_Monster_Deat4_Func010Func004C())then
 call SetUnitManaBJ(GetKillingUnitBJ(),(GetUnitStateSwap(UNIT_STATE_MANA,GetKillingUnitBJ())/ 2.00))call SetUnitLifeBJ(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))],(GetUnitStateSwap(UNIT_STATE_LIFE,udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])-(GetUnitStateSwap(UNIT_STATE_MAX_LIFE,udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])*0.55)))
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetKillingUnitBJ())),"       ÌôòÎ©∏Ïùò ÎèÖÏù¥ Ïä§Î©∞Îì≠ÎãàÎã§.")if(Trig_Monster_Deat4_Func010Func004Func005C())thenset udg_AGroup[12]=GetUnitsInRangeOfLocMatching(400.00,udg_ALocation[12],Condition(function Trig_Monster_Deat4_Func010Func004Func005Func001002003))call ForGroupBJ(udg_AGroup[12],function Trig_Monster_Deat4_Func010Func004Func005Func002A)call DestroyGroup(udg_AGroup[12])else
@@ -12723,7 +12724,7 @@ call CreateItemLoc(('˛•Ä'+'!—ë'),udg_ALocation[12])
 call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetManipulatingUnit())),("               "+("2019ÎÖÑÏùò Í∏∞Ïö¥Ïù¥ \"Ï∞ΩÍ≥†\" Ïóê ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§.")))
 call SetItemUserData(GetLastCreatedItem(),1)
 call CreateItemLoc(('G«-'+'4^7'),udg_ALocation[12])
-call SetItemCharges(GetLastCreatedItem(),3)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetManipulatingUnit())),("               "+("3 Í∞ú ÎßåÌÅº Î¥âÏù∏Îêú ÏòÅÌòºÏù¥ \"Ï∞ΩÍ≥†\" Ïóê ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§.")))
+call SetItemCharges(GetLastCreatedItem(),10)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetManipulatingUnit())),("               "+("3 Í∞ú ÎßåÌÅº Î¥âÏù∏Îêú ÏòÅÌòºÏù¥ \"Ï∞ΩÍ≥†\" Ïóê ÏÉùÏÑ±ÎêòÏóàÏäµÎãàÎã§.")))
 call SetItemUserData(GetLastCreatedItem(),1)
 if(Trig_Item_Use2_Func003Func003Func008C())thenset udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetManipulatingUnit()))]=(udg_ALevel[GetConvertedPlayerId(GetOwningPlayer(GetManipulatingUnit()))]+40)call DisplayTextToForce(GetForceOfPlayer(GetOwningPlayer(GetManipulatingUnit())),("               "+("40 ÎßåÌÅº Ï†ïÎ≥µÏûê Î†àÎ≤®Ïù¥ ÏÉÅÏäπÎê©ÎãàÎã§.")))
 else
@@ -18012,11 +18013,11 @@ endifreturn trueendfunctionfunction Trig_enter2222_Actions takes nothing retu
  10Î™Ö ÌíÄÎ∞©ÏóêÏÑú Í≥†ÏñëÏù¥Î•º Ïû°ÏïÑÎùº(Ï£ºÎ≥Ä ÌÅ¥Î¶¨Ïñ¥)")
 else
 endifif(Trig_enter2222_Func002C())thenset udg_AEvent[GetConvertedPlayerId(GetTriggerPlayer())]=10call CreateItemLoc(('†≠§n'+'~ò´∏'),GetPlayerStartLocationLoc(GetTriggerPlayer()))
-call SetItemCharges(GetLastCreatedItem(),2)call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),10)call SetItemUserData(GetLastCreatedItem(),1)
 call CreateItemLoc(('…vû'+'Bπ•W'),GetPlayerStartLocationLoc(GetTriggerPlayer()))
-call SetItemCharges(GetLastCreatedItem(),2)call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),10)call SetItemUserData(GetLastCreatedItem(),1)
 call CreateItemLoc(('/˛'+'jb@'),GetPlayerStartLocationLoc(GetTriggerPlayer()))
-call SetItemCharges(GetLastCreatedItem(),2)call SetItemUserData(GetLastCreatedItem(),1)
+call SetItemCharges(GetLastCreatedItem(),10)call SetItemUserData(GetLastCreatedItem(),1)
 call DisplayTextToForce(GetForceOfPlayer(GetTriggerPlayer()),"       - ÏùºÍ≥±Î≤àÏß∏ ÎØ∏ÏÖò ÏôÑÎ£å! -
  Ïã†Ïùò Ïû¨Î£åÌÖú 2Í∞úÏî© Î≥¥ÏÉÅ (Í∞úÏù∏Ï∞ΩÍ≥† ÎìúÎûç)
        -  Îã§Ïùå ÎØ∏ÏÖò -
@@ -20789,14 +20790,14 @@ endifif(Trig_loadskill2_Func027Func006C())thenset udg_AskillLevel_F[GetConvert
 endifelse
 endifif(Trig_loadskill2_Func028C())thenset udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())]=(udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())]+1)else
 endifif(Trig_loadskill2_Func029C())thenset udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())]=(udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())]+1)else
-endifcall SetUnitAbilityLevelSwapped('A04K',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A04L',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A01T',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A01X',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A016',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A01S',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0AH',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EN',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0ET',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A017',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A00V',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0DF',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A00Y',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A01W',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A019',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A010',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EO',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EU',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A00N',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EP',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0AQ',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A06O',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0AI',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A00Z',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EV',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A01P',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A07F',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A015',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A087',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EW',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A08P',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0AJ',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A086',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A085',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EQ',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A089',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09O',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0ER',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09P',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09Q',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0AK',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09R',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EX',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09T',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09W',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])endfunctionfunction InitTrig_loadskill2 takes nothing returns nothingset gg_trg_loadskill2=CreateTrigger()call TriggerAddAction(gg_trg_loadskill2,function Trig_loadskill2_Actions)endfunctionfunction Trig_cafeBuff2_Func001Func006C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="WARrr"))then
+endifcall SetUnitAbilityLevelSwapped('A04K',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A04L',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A01T',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A01X',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A016',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A01S',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0AH',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EN',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0ET',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_Q[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A017',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A00V',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0DF',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A00Y',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A01W',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A019',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A010',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EO',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EU',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_W[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A00N',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EP',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0AQ',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A06O',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0AI',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A00Z',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EV',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A01P',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A07F',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_E[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A015',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A087',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EW',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A08P',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0AJ',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A086',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A085',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EQ',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A089',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_R[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09O',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0ER',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09P',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09Q',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0AK',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09R',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A0EX',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09T',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])call SetUnitAbilityLevelSwapped('A09W',udg_hero[GetConvertedPlayerId(GetTriggerPlayer())],udg_AskillLevel_F[GetConvertedPlayerId(GetTriggerPlayer())])endfunctionfunction InitTrig_loadskill2 takes nothing returns nothingset gg_trg_loadskill2=CreateTrigger()call TriggerAddAction(gg_trg_loadskill2,function Trig_loadskill2_Actions)endfunctionfunction Trig_cafeBuff2_Func001Func006C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="Kinoler"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="ainzzz"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="chido14"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="coco_"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="migos"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="samsun"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Aloha"))then
 return trueendifreturn false
 endfunctionfunction Trig_cafeBuff2_Func001C takes nothing returns booleanif(not Trig_cafeBuff2_Func001Func006C())then
 return false
-endifreturn trueendfunctionfunction Trig_cafeBuff2_Func002C takes nothing returns booleanif(not(GetPlayerName(GetTriggerPlayer())=="WARrr"))thenreturn false
+endifreturn trueendfunctionfunction Trig_cafeBuff2_Func002C takes nothing returns booleanif(not(GetPlayerName(GetTriggerPlayer())=="Kinoler"))thenreturn false
 endifreturn trueendfunctionfunction Trig_cafeBuff2_Func004Func002Func002C takes nothing returns boolean
 if(not(udg_ALevel[GetConvertedPlayerId(GetTriggerPlayer())]>=120000))thenreturn false
 endifreturn trueendfunctionfunction Trig_cafeBuff2_Func004Func002Func003C takes nothing returns boolean
@@ -21131,12 +21132,12 @@ set gg_trg_buff=CreateTrigger()call TriggerAddAction(gg_trg_buff,function Trig_
 endifreturn trueendfunctionfunction Trig_loadpek_Func001Func007C takes nothing returns booleanif(not(udg_Bsupport[GetConvertedPlayerId(GetTriggerPlayer())]>=7011))thenreturn false
 endifreturn trueendfunctionfunction Trig_loadpek_Func001Func008C takes nothing returns booleanif(not(GetUnitAbilityLevelSwapped('A0AL',udg_bag[GetConvertedPlayerId(GetTriggerPlayer())])==1))then
 return false
-endifreturn trueendfunctionfunction Trig_loadpek_Func001Func009C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="ojs5413"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Noo"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="WARrr"))then
-return trueendifif((GetPlayerName(GetTriggerPlayer())=="sinobi"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Weed-"))then
+endifreturn trueendfunctionfunction Trig_loadpek_Func001Func009C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="ojs5413"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Noo"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Kinoler"))then
+return trueendifif((GetPlayerName(GetTriggerPlayer())=="Shiro"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Weed-"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="Jelly-"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="darkimpact"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="easypro"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="easypro#2927"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="RAID_LP"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="dbwlstn8"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Erightness"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Stiry"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="kdh1126"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Aask"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="voov"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="DongJi"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Shoharu"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="DarkBall"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Referee"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="cjftns89"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="dbrwjadbr"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="Hiheell"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Bang."))then
-return trueendifif((GetPlayerName(GetTriggerPlayer())=="Are"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="giga"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="happyljk"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="qkwnjdus"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Ïâ¨Îåï#3437"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="UnLuck"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Wha"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="mococo24"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="BAO"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="dkfls333"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="eLie"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="poto241zxc"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="stock523"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())==".Secret."))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="cane"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="a12a"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="yoman21"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="norie7"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="kimdnwls"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="rudnfco123"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="dldldl857"))then
+return trueendifif((GetPlayerName(GetTriggerPlayer())=="Are"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="giga"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="happyljk"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="qkwnjdus"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Ïâ¨Îåï#3437"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="UnLuck"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Wha"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="mococo24"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="BAO"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="dkfls333"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="eLie"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="poto241zxc"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="stock523"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())==".Secret."))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Shiro"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="a12a"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="yoman21"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="norie7"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="kimdnwls"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="rudnfco123"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="dldldl857"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="LET8856"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="WP_"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="co9"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="kang006"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="_Sin"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="JangInSung"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="FOOLS"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="ccad0004"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="doffl0809"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="AkiraSinJi"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="XNFE"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Gyarados"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="PooS"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="chocolatemilk"))then
@@ -21191,7 +21192,7 @@ endifreturn trueendfunctionfunction Trig_loadpek_Func002Func003C takes nothin
 endifreturn trueendfunctionfunction Trig_loadpek_Func002Func004C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="anjffhslrwltsi"))thenreturn trueendifreturn false
 endfunctionfunction Trig_loadpek_Func002C takes nothing returns boolean
 if(not Trig_loadpek_Func002Func004C())thenreturn false
-endifreturn trueendfunctionfunction Trig_loadpek_Func003Func008C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="WARrr"))then
+endifreturn trueendfunctionfunction Trig_loadpek_Func003Func008C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="Kinoler"))then
 return trueendifif((udg_AEvent3[GetConvertedPlayerId(GetTriggerPlayer())]==19))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ainzzz"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Ï£ΩÎπµÌÑ∏Î¶¥Îûò#3594"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="lkskkang"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Ï†ïÌÉúÌíç#3370"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Ìó§Î•¥ÎÇòÏù∏#3230"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="LSS3433"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="NaAA#31866"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="OverKill#3159"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="Ìå¨Ìã∞Î≤óÍ≥†#3670"))then
@@ -21240,7 +21241,7 @@ set udg_AllBuff[GetConvertedPlayerId(GetTriggerPlayer())]=(udg_AllBuff[GetConver
 set udg_APetSkillbonus[GetConvertedPlayerId(GetTriggerPlayer())]=(udg_APetSkillbonus[GetConvertedPlayerId(GetTriggerPlayer())]+1)set udg_ADropB[GetConvertedPlayerId(GetTriggerPlayer())]=(udg_ADropB[GetConvertedPlayerId(GetTriggerPlayer())]+15)else
 endifendfunctionfunction InitTrig_loadpek takes nothing returns nothingset gg_trg_loadpek=CreateTrigger()call TriggerAddAction(gg_trg_loadpek,function Trig_loadpek_Actions)endfunctionfunction Trig_petpassive_Func001C takes nothing returns booleanif(not(udg_APetSkill1[GetConvertedPlayerId(GetTriggerPlayer())]>=1))then
 return false
-endifreturn trueendfunctionfunction Trig_petpassive_Func002001 takes nothing returns booleanreturn(udg_ALevel[GetConvertedPlayerId(GetTriggerPlayer())]>=40000)endfunctionfunction Trig_petpassive_Func003001 takes nothing returns booleanreturn(udg_ALevel[GetConvertedPlayerId(GetTriggerPlayer())]>=50000)endfunctionfunction Trig_petpassive_Func004001 takes nothing returns booleanreturn(udg_ALevel[GetConvertedPlayerId(GetTriggerPlayer())]>=60000)endfunctionfunction Trig_petpassive_Func005001 takes nothing returns booleanreturn(GetPlayerName(GetTriggerPlayer())=="WARrr")endfunctionfunction Trig_petpassive_Func006001 takes nothing returns booleanreturn(GetPlayerName(GetTriggerPlayer())=="party2413")endfunctionfunction Trig_petpassive_Func007001 takes nothing returns booleanreturn(GetPlayerName(GetTriggerPlayer())=="party2413")endfunctionfunction Trig_petpassive_Func008Func003C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="_Sin"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Nova_1492"))then
+endifreturn trueendfunctionfunction Trig_petpassive_Func002001 takes nothing returns booleanreturn(udg_ALevel[GetConvertedPlayerId(GetTriggerPlayer())]>=40000)endfunctionfunction Trig_petpassive_Func003001 takes nothing returns booleanreturn(udg_ALevel[GetConvertedPlayerId(GetTriggerPlayer())]>=50000)endfunctionfunction Trig_petpassive_Func004001 takes nothing returns booleanreturn(udg_ALevel[GetConvertedPlayerId(GetTriggerPlayer())]>=60000)endfunctionfunction Trig_petpassive_Func005001 takes nothing returns booleanreturn(GetPlayerName(GetTriggerPlayer())=="Kinoler")endfunctionfunction Trig_petpassive_Func006001 takes nothing returns booleanreturn(GetPlayerName(GetTriggerPlayer())=="party2413")endfunctionfunction Trig_petpassive_Func007001 takes nothing returns booleanreturn(GetPlayerName(GetTriggerPlayer())=="party2413")endfunctionfunction Trig_petpassive_Func008Func003C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="_Sin"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Nova_1492"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="QAQ3"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ysw6307"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Ìó§Î•¥ÎÇòÏù∏#3230"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="amx30"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="ASPeRune"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ainzzz"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="BAO"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Last_Letter"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="chocolatemilk"))then
@@ -21268,7 +21269,7 @@ endifif((udg_ALevel[GetConvertedPlayerId(GetTriggerPlayer())]>=50000))thenset 
 call StartFunction()
 endifif((udg_ALevel[GetConvertedPlayerId(GetTriggerPlayer())]>=60000))thenset udg_APetSkillbonus[GetConvertedPlayerId(GetTriggerPlayer())]=(udg_APetSkillbonus[GetConvertedPlayerId(GetTriggerPlayer())]+1)else
 call StartFunction()
-endifif((GetPlayerName(GetTriggerPlayer())=="WARrr"))then
+endifif((GetPlayerName(GetTriggerPlayer())=="Kinoler"))then
 set udg_AEvent6[GetConvertedPlayerId(GetTriggerPlayer())]=6else
 call DoNothing()
 endifif((GetPlayerName(GetTriggerPlayer())=="party2413"))then
@@ -21390,7 +21391,7 @@ endifif((udg_BWing[GetConvertedPlayerId(GetTriggerPlayer())]==22))thencall Add
 call DoNothing()
 endifelse
 endifendfunctionfunction InitTrig_loadbuff takes nothing returns nothing
-set gg_trg_loadbuff=CreateTrigger()call TriggerAddAction(gg_trg_loadbuff,function Trig_loadbuff_Actions)endfunctionfunction Trig_name4_Func001Func004C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="ysw6307"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="asfas54"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="WARrr"))then
+set gg_trg_loadbuff=CreateTrigger()call TriggerAddAction(gg_trg_loadbuff,function Trig_loadbuff_Actions)endfunctionfunction Trig_name4_Func001Func004C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="ysw6307"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="asfas54"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Kinoler"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="Aloha"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="speedboys"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="samsun"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="QAQ3"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="hun1"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Tas"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="RPG_USER"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="bini."))then
@@ -21453,7 +21454,7 @@ endifreturn trueendfunctionfunction Trig_name4_Func001Func056C takes nothing 
 return false
 endifreturn trueendfunctionfunction Trig_name4_Func001Func057C takes nothing returns booleanif(not(GetPlayerName(GetTriggerPlayer())=="speedboys"))thenreturn false
 endifreturn trueendfunctionfunction Trig_name4_Func001Func058C takes nothing returns booleanif(not(GetPlayerName(GetTriggerPlayer())=="Aloha"))thenreturn false
-endifreturn trueendfunctionfunction Trig_name4_Func001Func059C takes nothing returns booleanif(not(GetPlayerName(GetTriggerPlayer())=="WARrr"))thenreturn false
+endifreturn trueendfunctionfunction Trig_name4_Func001Func059C takes nothing returns booleanif(not(GetPlayerName(GetTriggerPlayer())=="Kinoler"))thenreturn false
 endifreturn trueendfunctionfunction Trig_name4_Func001Func060C takes nothing returns booleanif(not(GetPlayerName(GetTriggerPlayer())=="asfas54"))thenreturn false
 endifreturn trueendfunctionfunction Trig_name4_Func001Func061C takes nothing returns booleanif(not(GetPlayerName(GetTriggerPlayer())=="ysw6307"))thenreturn false
 endifreturn trueendfunctionfunction Trig_name4_Func001C takes nothing returns booleanif(not Trig_name4_Func001Func004C())then
@@ -21606,10 +21607,10 @@ call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(),1,(GetConvertedPlayerId
 call SetPlayerName(GetTriggerPlayer(),"Í∏∞ÏÇ¨")else
 endifset udg_Name[(GetConvertedPlayerId(GetTriggerPlayer())+10)]=GetPlayerName(GetTriggerPlayer())else
 endifendfunctionfunction InitTrig_name4 takes nothing returns nothingset gg_trg_name4=CreateTrigger()
-call TriggerAddAction(gg_trg_name4,function Trig_name4_Actions)endfunctionfunction Trig_loadbuff2_Func001Func002C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="Stiry"))then
-return trueendifif((GetPlayerName(GetTriggerPlayer())=="Weed-"))then
+call TriggerAddAction(gg_trg_name4,function Trig_name4_Actions)endfunctionfunction Trig_loadbuff2_Func001Func002C takes nothing returns booleanif((GetPlayerName(GetTriggerPlayer())=="Kinoler"))then
+return trueendifif((GetPlayerName(GetTriggerPlayer())=="Shiro"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="Jelly-"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="XDcool"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="GunDa"))then
-return trueendifif((GetPlayerName(GetTriggerPlayer())=="Pn[F]Natal"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="pkppll66"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="qkrwnsdh0422"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Noo"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Liadrin"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ojs5413"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="rsb0907"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="sinobi"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ksm9207"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="signum"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Vayne9"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="jungkyu1103"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="cane"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="darkimpact"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="GGaMang"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ago0206"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="SnowBoo"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="migos"))then
+return trueendifif((GetPlayerName(GetTriggerPlayer())=="Pn[F]Natal"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="pkppll66"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="qkrwnsdh0422"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Noo"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Liadrin"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ojs5413"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="rsb0907"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Shiro"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ksm9207"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="signum"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Vayne9"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="jungkyu1103"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Shiro"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="darkimpact"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="GGaMang"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ago0206"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="SnowBoo"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="migos"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="pjw0946"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Odeyeing"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="chocolatemilk"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="AsiaNa"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="tlstjseh"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Onew"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="easypro"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="RAID_LP"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="lsw0914"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="wjdtn2725"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="dbwlstn8"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="MH_Archer"))then
@@ -22513,8 +22514,8 @@ if((GetPlayerName(GetTriggerPlayer())=="ÍπÄÍ∏∞Î¶∞#3861"))thenreturn trueendif
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="Weed-"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="Jelly-"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ÎßàÏùºÎìúÏÑ∏Î∏ê#31907"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="XDcool"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="jungkyu1103"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="GunDa"))then
-return trueendifif((GetPlayerName(GetTriggerPlayer())=="Pn[F]Natal"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="pkppll66"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ksm9207"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="sinobi"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="qkrwnsdh0422"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="addiction"))then
-return trueendifif((GetPlayerName(GetTriggerPlayer())=="Noo"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="tlstjseh"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="cane"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="dldldl857"))then
+return trueendifif((GetPlayerName(GetTriggerPlayer())=="Pn[F]Natal"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="pkppll66"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ksm9207"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Shiro"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="qkrwnsdh0422"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="addiction"))then
+return trueendifif((GetPlayerName(GetTriggerPlayer())=="Noo"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="tlstjseh"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Shiro"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="dldldl857"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="Bella"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="Liadrin"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ojs5413"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Îç∞ÎØ∏#31704"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="signum"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="RinFone"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="rsb0907"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="Vayne9"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="darkimpact"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="ago0206"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="AsiaNa"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="SnowBoo"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="migos"))then
 return trueendifif((GetPlayerName(GetTriggerPlayer())=="Odeyeing"))thenreturn trueendifif((GetPlayerName(GetTriggerPlayer())=="chocolatemilk"))then
@@ -23063,9 +23064,9 @@ if(not(GetPlayerName(GetTriggerPlayer())=="Bella"))thenreturn false
 endifreturn trueendfunctionfunction Trig_name_Func001Func233C takes nothing returns boolean
 if(not(GetPlayerName(GetTriggerPlayer())=="dldldl857"))thenreturn false
 endifreturn trueendfunctionfunction Trig_name_Func001Func234C takes nothing returns boolean
-if(not(GetPlayerName(GetTriggerPlayer())=="cane"))thenreturn false
+if(not(GetPlayerName(GetTriggerPlayer())=="Shiro"))thenreturn false
 endifreturn trueendfunctionfunction Trig_name_Func001Func235C takes nothing returns boolean
-if(not(GetPlayerName(GetTriggerPlayer())=="sinobi"))then
+if(not(GetPlayerName(GetTriggerPlayer())=="Shiro"))then
 return false
 endifreturn trueendfunctionfunction Trig_name_Func001Func236C takes nothing returns boolean
 if(not(GetPlayerName(GetTriggerPlayer())=="ksm9207"))thenreturn false
