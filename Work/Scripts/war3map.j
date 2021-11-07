@@ -500,64 +500,70 @@ set we=AddWeatherEffect(gg_rct_Boss57o2,'FDbh')call EnableWeatherEffect(we,true
 set gg_rct_Boss57o1=Rect(-20896.0,-15360.0,-20288.0,-14848.0)endfunctionfunction PreloadFiles takes nothing returns nothinglocal integer i=11if ReloadGameCachesFromDisk()thenloop
 call SetPlayerName(Player(i),"This map cannot be played in single player.")exitwhen i==0set i=i-1endloopcall EndGame(true)endifendfunctionfunction itemdrop2 takes integer u1,integer u2,integer u3,real dr,integer db,integer dloop,integer i1,integer c1,real r1,integer i2,integer c2,real r2,integer i3,integer c3,real r3,integer i4,integer c4,real r4,integer i5,integer c5,real r5,integer i6,integer c6,real r6,integer e,location l,boolean bo,string s,player p returns nothing
 local integer loopA=1local real random=0if GetUnitTypeId(GetDyingUnit())==u1 or GetUnitTypeId(GetDyingUnit())==u2 or GetUnitTypeId(GetDyingUnit())==u3 thenset dr=dr*(1.00+(db*0.01))+40.00
-set dloop=dloop+5loop
+set dloop=dloop+5
+set db=db+400loop
 exitwhen loopA>dloop
 if GetRandomReal(0,100)<=dr then
 if bo==true then
 if GetRandomReal(0,100)<=r1*(1.00+(db*0.01))and 0<r1 thencall CreateItemLoc(i1,l)
 call SetItemUserData(GetLastCreatedItem(),e)
 if c1>0 then
-call SetItemCharges(GetLastCreatedItem(),c1)
+call SetItemCharges(GetLastCreatedItem(),c1+15)
 endifset random=1
 endifif GetRandomReal(0,100)<=r2*(1.00+(db*0.01))and 0<r2 thencall CreateItemLoc(i2,l)
 call SetItemUserData(GetLastCreatedItem(),e)
 if c2>0 then
-call SetItemCharges(GetLastCreatedItem(),c2)
+call SetItemCharges(GetLastCreatedItem(),c2+15)
 endifset random=1
 endifif GetRandomReal(0,100)<=r3*(1.00+(db*0.01))and 0<r3 thencall CreateItemLoc(i3,l)
 call SetItemUserData(GetLastCreatedItem(),e)
 if c3>0 then
-call SetItemCharges(GetLastCreatedItem(),c3)
+call SetItemCharges(GetLastCreatedItem(),c3+15)
 endifset random=1
 endifif GetRandomReal(0,100)<=r4*(1.00+(db*0.01))and 0<r4 thencall CreateItemLoc(i4,l)
 call SetItemUserData(GetLastCreatedItem(),e)
 if c4>0 then
-call SetItemCharges(GetLastCreatedItem(),c4)
+call SetItemCharges(GetLastCreatedItem(),c4+15)
 endifset random=1
 endifif GetRandomReal(0,100)<=r5*(1.00+(db*0.01))and 0<r5 thencall CreateItemLoc(i5,l)
 call SetItemUserData(GetLastCreatedItem(),e)
 if c5>0 then
-call SetItemCharges(GetLastCreatedItem(),c5)
+call SetItemCharges(GetLastCreatedItem(),c5+15)
 endifset random=1
 endifif GetRandomReal(0,100)<=r6*(1.00+(db*0.01))and 0<r6 thencall CreateItemLoc(i6,l)
 call SetItemUserData(GetLastCreatedItem(),e)
 if c6>0 then
-call SetItemCharges(GetLastCreatedItem(),c6)
+call SetItemCharges(GetLastCreatedItem(),c6+15)
 endifset random=1
 endifif s!="" and random==1 thenif p==Player(10)then
 call DisplayTimedTextToForce(GetPlayersAll(),30.00,s)else
 call DisplayTimedTextToForce(GetForceOfPlayer(p),30.00,s)endifendifelse
 set random=r1+r2+r3+r4+r5+r6
-set random=GetRandomReal(0,random)if random<=r1 and r1!=0 then
+set random=GetRandomReal(0,random)-50.00if random<=r1 and r1!=0 then
 call CreateItemLoc(i1,l)
 if c1>0 then
-call SetItemCharges(GetLastCreatedItem(),c1)
-endifelseif random<=r1+r2 and r2!=0 thencall CreateItemLoc(i2,l)
+call SetItemCharges(GetLastCreatedItem(),c1+15)
+endifendif
+if random<=r1+r2 and r2!=0 thencall CreateItemLoc(i2,l)
 if c2>0 then
-call SetItemCharges(GetLastCreatedItem(),c2)
-endifelseif random<=r1+r2+r3 and r3!=0 thencall CreateItemLoc(i3,l)
+call SetItemCharges(GetLastCreatedItem(),c2+15)
+endifendif
+if random<=r1+r2+r3 and r3!=0 thencall CreateItemLoc(i3,l)
 if c3>0 then
-call SetItemCharges(GetLastCreatedItem(),c3)
-endifelseif random<=r1+r2+r3+r4 and r4!=0 thencall CreateItemLoc(i4,l)
+call SetItemCharges(GetLastCreatedItem(),c3+15)
+endifendif
+if random<=r1+r2+r3+r4 and r4!=0 thencall CreateItemLoc(i4,l)
 if c4>0 then
-call SetItemCharges(GetLastCreatedItem(),c4)
-endifelseif random<=r1+r2+r3+r4+r5 and r5!=0 then
+call SetItemCharges(GetLastCreatedItem(),c4+15)
+endifendif
+if random<=r1+r2+r3+r4+r5 and r5!=0 then
 call CreateItemLoc(i5,l)
 if c5>0 then
-call SetItemCharges(GetLastCreatedItem(),c5)
-endifelseif random<=r1+r2+r3+r4+r5+r6 and r6!=0 thencall CreateItemLoc(i6,l)
+call SetItemCharges(GetLastCreatedItem(),c5+15)
+endifendif
+if random<=r1+r2+r3+r4+r5+r6 and r6!=0 thencall CreateItemLoc(i6,l)
 if c6>0 then
-call SetItemCharges(GetLastCreatedItem(),c6)
+call SetItemCharges(GetLastCreatedItem(),c6+15)
 endifendifcall SetItemUserData(GetLastCreatedItem(),e)
 if s!="" thenif p==Player(10)then
 call DisplayTimedTextToForce(GetPlayersAll(),30.00,s)else
