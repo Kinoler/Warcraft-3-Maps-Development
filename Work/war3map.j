@@ -822,6 +822,7 @@ rect Gb=null
 rect Gc=null
 rect Gd=null
 rect Ge=null
+boolean timerStopped=false
 camerasetup Gf=null
 camerasetup Gg=null
 camerasetup Gh=null
@@ -6125,24 +6126,7 @@ local integer Ot=GetHeroLevel(Ol[H8])
 local unit Ov=Ng[H8]
 local boolean Ou=false
 local integer Ns=0
-if Ot>=95 then
 set Ng[H8]=ReplaceUnitBJ(Ng[H8],$68303358,bj_UNIT_STATE_METHOD_RELATIVE)
-set Ou=true
-elseif Ot>=80 then
-set Ng[H8]=ReplaceUnitBJ(Ng[H8],$68303357,bj_UNIT_STATE_METHOD_RELATIVE)
-set Ou=true
-elseif Ot>=65 then
-set Ng[H8]=ReplaceUnitBJ(Ng[H8],$68303251,bj_UNIT_STATE_METHOD_RELATIVE)
-set Ou=true
-elseif Ot>=50 then
-set Ng[H8]=ReplaceUnitBJ(Ng[H8],$68303250,bj_UNIT_STATE_METHOD_RELATIVE)
-set Ou=true
-elseif Ot>=35 then
-set Ng[H8]=ReplaceUnitBJ(Ng[H8],$6830324F,bj_UNIT_STATE_METHOD_RELATIVE)
-set Ou=true
-else
-set Ou=true
-endif
 if Ou then
 call SetUnitInvulnerable(Ng[H8],true)
 call SetUnitOwner(Ng[H8],ConvertedPlayer(H8),true)
@@ -9277,14 +9261,6 @@ call TriggerAddAction(MY,function IILI1I11)
 endfunction
 function IILI1L11 takes nothing returns nothing
 local integer Mc=0
-loop
-exitwhen Mc>9
-if Ig[Mc]==true then
-call CustomVictoryBJ(ConvertedPlayer(Mc),false,false)
-else
-endif
-set Mc=Mc+1
-endloop
 endfunction
 function IILI1LL1 takes nothing returns nothing
 local boolean Mf=false
@@ -9397,7 +9373,7 @@ endif
 return true
 endfunction
 function IILILLL1 takes nothing returns nothing
-if IILILLI1() then
+if false then
 call QuestMessageBJ(I1L11LI1(GetTriggerPlayer()),bj_QUESTMESSAGE_SECRET,"|c00FF0000Ваш герой ещё жив, его нельзя сохранить!|r")
 else
 set bj_forLoopAIndex=1
@@ -9607,21 +9583,21 @@ call UnitAddItemByIdSwapped(Mw,GetLastCreatedUnit())
 set bj_forLoopBIndex=bj_forLoopBIndex+1
 endloop
 if IILLII11() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=6
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=25
 else
 if IILLI1L1() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=5
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=20
 else
 if IILLI1I1() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=4
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=15
 else
 if IILLI111() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=3
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=10
 else
 if IILL1LL1() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=2
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=6
 else
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=1
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetLastCreatedUnit()))]=3
 endif
 endif
 endif
@@ -10386,6 +10362,24 @@ return false
 endif
 return true
 endfunction
+function IsStartTimer takes nothing returns boolean
+if not (timerStopped==true) then
+return false
+endif
+if not (GetEventPlayerChatString()=="-start") then
+return false
+endif
+return true
+endfunction
+function IsStopTimer takes nothing returns boolean
+if not (timerStopped==false) then
+return false
+endif
+if not (GetEventPlayerChatString()=="-stop") then
+return false
+endif
+return true
+endfunction
 function ILI11111 takes nothing returns boolean
 if not (Nb==false) then
 return false
@@ -10895,6 +10889,22 @@ call PauseTimerBJ(false,L8)
 return
 else
 endif
+
+if IsStopTimer() then
+call DisplayTextToForce(GetPlayersAll(),"|c000080FFЛидер экспедиции отключил таймер волн! Команда -start включит таймер старта.|r")
+set timerStopped=true
+call PauseTimerBJ(true,Lq)
+return
+else
+endif
+if IsStartTimer() then
+call DisplayTextToForce(GetPlayersAll(),"|c000080FFЛидер экспедиции включил таймер волн.|r")
+set timerStopped=false
+call PauseTimerBJ(false,Lq)
+return
+else
+endif
+
 else
 endif
 if ILI11IL1() then
@@ -11304,12 +11314,8 @@ endif
 return true
 endfunction
 function ILILL1I1 takes nothing returns nothing
-call CreateFogModifierRectBJ(true,GetEnumPlayer(),FOG_OF_WAR_VISIBLE,GetPlayableMapRect())
-set OC[GetConvertedPlayerId(GetEnumPlayer())]=GetLastCreatedFogModifier()
 endfunction
 function ILILL1L1 takes nothing returns nothing
-call FogModifierStop(OC[GetConvertedPlayerId(GetEnumPlayer())])
-call CreateFogModifierRectBJ(true,GetEnumPlayer(),FOG_OF_WAR_MASKED,GetPlayableMapRect())
 endfunction
 function ILILLI11 takes nothing returns nothing
 call ForForce(GetPlayersAll(),function ILIL1L11)
@@ -11582,9 +11588,6 @@ exitwhen OY>25
 set OZ[OY]=Jc[OY+(OQ-1)*100]
 set OY=OY+1
 endloop
-if S2I(OZ[1])>S2I(OZ[4])*1000 then
-set OZ[1]=I2S(S2I(OZ[4])*1000)
-endif
 set OZ[90]=I2S(S2I(OZ[1])+1)
 set OZ[91]=OZ[91]+OZ[90]
 set OZ[98]=OZ[98]+I2RAW(S2I(OZ[90]),OO)+"-"
@@ -11924,7 +11927,7 @@ endfunction
 function ILLII1L1 takes nothing returns nothing
 call TriggerSleepAction(.01)
 if ILLI1LL1() then
-if ILLI1LI1() then
+if false then
 call DisplayTextToForce(I1L11LI1(GetTriggerPlayer()),"                                                       Нельзя сохранить живого героя!")
 else
 if ILLI1L11() then
@@ -13569,37 +13572,37 @@ endif
 return true
 endfunction
 function L1IIIIL1 takes nothing returns boolean
-if not (GetRandomInt(1,6)==6) then
+if not (GetRandomInt(5,6)==6) then
 return false
 endif
 return true
 endfunction
 function L1IIIL11 takes nothing returns boolean
-if not (GetRandomInt(1,6)==5) then
+if not (GetRandomInt(5,6)==5) then
 return false
 endif
 return true
 endfunction
 function L1IIILI1 takes nothing returns boolean
-if not (GetRandomInt(1,6)==4) then
+if not (GetRandomInt(3,4)==4) then
 return false
 endif
 return true
 endfunction
 function L1IIILL1 takes nothing returns boolean
-if not (GetRandomInt(1,6)==3) then
+if not (GetRandomInt(3,4)==3) then
 return false
 endif
 return true
 endfunction
 function L1IIL111 takes nothing returns boolean
-if not (GetRandomInt(1,6)==2) then
+if not (GetRandomInt(1,2)==2) then
 return false
 endif
 return true
 endfunction
 function L1IIL1I1 takes nothing returns boolean
-if not (GetRandomInt(1,6)==1) then
+if not (GetRandomInt(1,2)==1) then
 return false
 endif
 return true
@@ -14123,8 +14126,6 @@ endif
 endfunction
 function L1L1L111 takes nothing returns nothing
 local integer Mc=1
-call FogEnableOn()
-call FogMaskEnableOn()
 call SetUserControlForceOff(GetPlayersAll())
 call InitHashtableBJ()
 set Pj=GetLastCreatedHashtableBJ()
@@ -14645,33 +14646,33 @@ if L1LIIIL1() then
 set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=11
 else
 if L1LIIII1() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=10
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=30
 else
 if L1LIII11() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=9
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=25
 else
 if L1LII1L1() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=8
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=22
 else
 if L1LII1I1() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=7
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=20
 else
 if L1LII111() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=6
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=18
 else
 if L1LI1LL1() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=5
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=14
 else
 if L1LI1LI1() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=4
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=12
 else
 if L1LI1L11() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=3
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=9
 else
 if L1LI1IL1() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=2
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=6
 else
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=1
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=3
 endif
 endif
 endif
@@ -15222,12 +15223,8 @@ endif
 return true
 endfunction
 function LI11LLI1 takes nothing returns nothing
-call CreateFogModifierRectBJ(true,GetEnumPlayer(),FOG_OF_WAR_VISIBLE,DQ)
-set OC[GetConvertedPlayerId(GetEnumPlayer())]=GetLastCreatedFogModifier()
 endfunction
 function LI11LLL1 takes nothing returns nothing
-call FogModifierStop(OC[GetConvertedPlayerId(GetEnumPlayer())])
-call CreateFogModifierRectBJ(true,GetEnumPlayer(),FOG_OF_WAR_MASKED,GetPlayableMapRect())
 endfunction
 function LI1I1111 takes nothing returns boolean
 if not (J5[GetConvertedPlayerId(GetEnumPlayer())]==true) then
@@ -19204,25 +19201,21 @@ endif
 if Rc==$41304941 then
 if GetUnitLevel(Rg)<5 then
 call SetUnitExploded(Rg,true)
-call KillUnit(Rg)
 endif
 endif
 if Rc==$41313641 then
 if GetUnitLevel(Rg)<5 and GetRandomInt(1,100)<=5 then
 call SetUnitExploded(Rg,true)
-call KillUnit(Rg)
 endif
 endif
 if Rc==$41313644 then
 if GetUnitLevel(Rg)<5 and GetRandomInt(1,100)<=10 then
 call SetUnitExploded(Rg,true)
-call KillUnit(Rg)
 endif
 endif
 if Rc==$4131484A then
 if GetUnitLevel(Rg)<5 and GetRandomInt(1,100)<=50 then
 call SetUnitExploded(Rg,true)
-call KillUnit(Rg)
 endif
 endif
 if II111LI1(RY,$49303947) then
@@ -23628,7 +23621,7 @@ endif
 return true
 endfunction
 function I1I11L1I takes nothing returns boolean
-if not (GetRandomInt(1,100)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*3) then
 return false
 endif
 return true
@@ -23640,7 +23633,7 @@ endif
 return true
 endfunction
 function I1I11LLI takes nothing returns boolean
-if not (GetRandomInt(1,100)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*3) then
 return false
 endif
 return true
@@ -23652,7 +23645,7 @@ endif
 return true
 endfunction
 function I1I1I1II takes nothing returns boolean
-if not (GetRandomInt(1,100)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*3) then
 return false
 endif
 return true
@@ -23664,7 +23657,7 @@ endif
 return true
 endfunction
 function I1I1II1I takes nothing returns boolean
-if not (GetRandomInt(1,100)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*3) then
 return false
 endif
 return true
@@ -23676,7 +23669,7 @@ endif
 return true
 endfunction
 function I1I1IILI takes nothing returns boolean
-if not (GetRandomInt(1,100)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*2) then
+if not (GetRandomInt(1,50)<=GetUnitAbilityLevelSwapped($41303141,GetEventDamageSource())*3) then
 return false
 endif
 return true
@@ -23724,7 +23717,7 @@ endif
 return true
 endfunction
 function I1I1LIII takes nothing returns boolean
-if not (GetRandomInt(1,100)<=2) then
+if not (GetRandomInt(1,100)<=20) then
 return false
 endif
 return true
@@ -24346,7 +24339,6 @@ call FlushChildHashtable(Pj,SG)
 call GroupClear(JO[GetPlayerId(GetOwningPlayer(HE))])
 call PauseTimer(HF)
 call DestroyTimer(HF)
-call KillUnit(Ru)
 endif
 set HE=null
 set T3=null
@@ -26917,7 +26909,7 @@ set Je[bj_forLoopAIndex]=NY
 endif
 call MultiboardSetItemValueBJ(LF,7,H8,"|c0000AAAA"+(I2S(Je[bj_forLoopAIndex])+"|r"))
 if JK[bj_forLoopAIndex]==true then
-set Uh=Uh+Ja[bj_forLoopAIndex]
+set Uh=Uh+40
 set Ui=Ja[bj_forLoopAIndex]
 if Ui>25 then
 call MultiboardSetItemValueBJ(LF,8,H8,"|c0020FF20"+(I2S(Ui)+"|r"))
@@ -26958,8 +26950,8 @@ endif
 endif
 call MultiboardSetItemValueBJ(LF,1,Nw+4,"|c00FF0000Сложность: |r"+I2S(Na))
 if Uh>20 then
-set P0=20
-call MultiboardSetItemValueBJ(LF,2,Nw+4,"|c00FF8000Удача команды: |r 20+")
+set P0=Uh
+call MultiboardSetItemValueBJ(LF,2,Nw+4,"|c00FF8000Удача команды: |r"+I2S(P0))
 else
 set P0=Uh
 call MultiboardSetItemValueBJ(LF,2,Nw+4,"|c00FF8000Удача команды: |r"+I2S(P0))
