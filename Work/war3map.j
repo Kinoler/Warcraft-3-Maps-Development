@@ -14579,7 +14579,7 @@ call DestroyEffect(GetLastCreatedEffectBJ())
 call SetPlayerAllianceBJ(GetOwningPlayer(GetTriggerUnit()),ALLIANCE_SHARED_VISION,true,Player(11))
 call ForceAddPlayerSimple(GetOwningPlayer(GetTriggerUnit()),LM)
 if L1LIIIL1() then
-set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=11
+set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=35
 else
 if L1LIIII1() then
 set IS[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=30
@@ -25546,9 +25546,6 @@ function II11LLII takes nothing returns boolean
 if not (IS[GetConvertedPlayerId(GetTriggerPlayer())]>0) then
 return false
 endif
-if not (IS[GetConvertedPlayerId(GetTriggerPlayer())]<=11) then
-return false
-endif
 return true
 endfunction
 function II11LLLI takes nothing returns nothing
@@ -26940,21 +26937,19 @@ call CreateItemLoc($49303158,Ne)
 call RemoveLocation(Ne)
 endfunction
 function IIIL1I1I takes nothing returns nothing
+local integer Omq=1
 set Ne=GetUnitLoc(Ut)
-set Uu=1+(P0+Ja[GetConvertedPlayerId(GetOwningPlayer(Uv))])
-if Uw==1 then
-call CreateItemLoc(Ux[1],Ne)
-else
-if GetRandomInt(1,100)<=Uu then
+
 call AddSpecialEffectLocBJ(Ne,"Abilities\\Spells\\Other\\Transmute\\PileofGold.mdl")
 call DestroyEffect(GetLastCreatedEffectBJ())
-call CreateItemLoc(Ux[1],Ne)
-else
-set Uy=Ux[GetRandomInt(2,Uw)]
-call CreateItemLoc(Uy,Ne)
-endif
-endif
-call IILLLLL1(GetLastCreatedItem(),Ne)
+
+loop
+exitwhen Omq>Uw
+call CreateItemLoc(Ux[Omq],Ne)
+call SetItemPositionLoc(GetLastCreatedItem(),Ne)
+set Omq=Omq+1
+endloop
+
 call RemoveLocation(Ne)
 endfunction
 function IIIL1ILI takes nothing returns boolean
