@@ -6127,6 +6127,7 @@ local unit Ov=Ng[H8]
 local boolean Ou=false
 local integer Ns=0
 set Ng[H8]=ReplaceUnitBJ(Ng[H8],$68303358,bj_UNIT_STATE_METHOD_RELATIVE)
+set Ou=true
 if Ou then
 call SetUnitInvulnerable(Ng[H8],true)
 call SetUnitOwner(Ng[H8],ConvertedPlayer(H8),true)
@@ -9372,6 +9373,104 @@ return false
 endif
 return true
 endfunction
+
+function SaveCharacter takes unit u returns nothing
+local string array OZ
+local integer Oj=0
+local integer OY=0
+local player OP
+local integer OQ=0
+local unit Oz
+local unit O0
+set Oz=u
+set OP=GetOwningPlayer(Oz)
+set OQ=GetConvertedPlayerId(OP)
+set O0=Ng[OQ]
+set OZ[1]=I2S(GetPlayerState(OP,PLAYER_STATE_RESOURCE_GOLD))
+if GetUnitTypeId(Oz)==$48303030 then
+set OZ[2]="1"
+elseif GetUnitTypeId(Oz)==$48303033 then
+set OZ[2]="2"
+elseif GetUnitTypeId(Oz)==$48303031 then
+set OZ[2]="3"
+elseif GetUnitTypeId(Oz)==$48303032 then
+set OZ[2]="4"
+elseif GetUnitTypeId(Oz)==$48303035 then
+set OZ[2]="5"
+elseif GetUnitTypeId(Oz)==$48303036 then
+set OZ[2]="6"
+elseif GetUnitTypeId(Oz)==$48303034 then
+set OZ[2]="7"
+elseif GetUnitTypeId(Oz)==$4E303030 then
+set OZ[2]="8"
+else
+set OZ[2]="9"
+endif
+set OZ[3]=I2S(GetHeroXP(Oz))
+set OZ[4]=I2S(GetHeroLevel(Oz))
+if S2I(OZ[1])>S2I(OZ[4])*1000 then
+set OZ[1]=I2S(S2I(OZ[4])*1000)
+endif
+set OZ[5]=JR[OQ+10]
+set OZ[6]=I2S(Jb[OQ])
+set OZ[19]=SubStringBJ(GetUnitName(HV),4,6)
+if S2I(Jc[20+(OQ-1)*100])<=NY then
+set OZ[20]=I2S(NY)
+else
+set OZ[20]=Jc[20+(OQ-1)*100]
+endif
+set OZ[21]=I2S(JY[OQ])
+set OZ[22]=I2S(JZ[OQ])
+if JX[OQ]<1000 or JX[OQ]>4000 then
+set OZ[23]="18"
+else
+set OZ[23]=I2S(R2I(JX[OQ]/100))
+endif
+set Oj=1
+loop
+exitwhen Oj>6
+set OZ[Oj+6]=I2S(GetRandomInt(980,999))
+set OZ[Oj+12]=I2S(GetRandomInt(980,999))
+if UnitItemInSlot(Oz,Oj-1)!=null then
+set OY=100
+loop
+exitwhen OY>999
+if GetItemTypeId(UnitItemInSlot(Oz,Oj-1))==Oq[OY] then
+set OZ[Oj+6]=I2S(OY)
+set OY=999
+endif
+set OY=OY+1
+endloop
+endif
+if UnitItemInSlot(O0,Oj-1)!=null then
+set OY=100
+loop
+exitwhen OY>999
+if GetItemTypeId(UnitItemInSlot(O0,Oj-1))==Oq[OY] then
+set OZ[Oj+12]=I2S(OY)
+set OY=999
+endif
+set OY=OY+1
+endloop
+endif
+set Oj=Oj+1
+endloop
+set Oj=1
+loop
+exitwhen Oj>10
+if OQ==Oj then
+set OY=1
+loop
+exitwhen OY>25
+set Jc[OY]=OZ[OY]
+set OY=OY+1
+endloop
+endif
+set Oj=Oj+1
+endloop
+
+endfunction
+
 function IILILLL1 takes nothing returns nothing
 if false then
 call QuestMessageBJ(I1L11LI1(GetTriggerPlayer()),bj_QUESTMESSAGE_SECRET,"|c00FF0000Ваш герой ещё жив, его нельзя сохранить!|r")
@@ -11390,8 +11489,6 @@ call TriggerSleepAction(.2)
 call ForForce(GetPlayersAll(),function ILILL1L1)
 endfunction
 function ILILLIL1 takes nothing returns nothing
-call DisableTrigger(OE)
-call DisableTrigger(OF)
 call DisplayTextToForce(GetPlayersAll(),"Игра была сохранена. Теперь никто не может сохранять и загружать героев. Приятной вам игры.")
 endfunction
 function ILILLLI1 takes nothing returns boolean
@@ -11542,7 +11639,7 @@ return true
 endfunction
 function ILL1IIL1 takes nothing returns nothing
 endfunction
-function ILL1ILL1 takes nothing returns nothing
+function ILL1ILL1 takes unit u returns nothing
 local string OO=GetUnitName(HU)
 local string array OZ
 local string OS=""
@@ -11556,6 +11653,7 @@ local integer OU=1
 local integer Oa=0
 local player OP
 local integer OQ=0
+call SaveCharacter(u)
 if SubString(GetEventPlayerChatString(),1,5)==GetUnitName(HX) then
 set Iz[0]=S2I(SubStringBJ(GetUnitName(HV),4,6))
 set Iz[1]=S2I(SubStringBJ(GetUnitName(HV),1,3))
@@ -11582,10 +11680,10 @@ set OW=false
 set OT=OT+1
 endloop
 endif
-if Iu[OQ]==true or true then
+if  true then
 loop
 exitwhen OY>25
-set OZ[OY]=Jc[OY+(OQ-1)*100]
+set OZ[OY]=Jc[OY]
 set OY=OY+1
 endloop
 set OZ[90]=I2S(S2I(OZ[1])+1)
@@ -11623,27 +11721,16 @@ set OZ[98]=OZ[98]+I2RAW(Oa,OO)
 set Jc[OQ+5000]=OZ[98]
 call QuestMessageBJ(I1L11LI1(OP),bj_QUESTMESSAGE_ALWAYSHINT,"|c00FEBA0EЗолото:|r "+OZ[1])
 call IIILILL1(OP,OZ[98],OZ[2],OQ,OX)
-set Iu[OQ]=false
 endif
 endif
 endfunction
 function ILL1LLL1 takes nothing returns boolean
-if not (JW[GetConvertedPlayerId(GetTriggerPlayer())]==true and Kr[GetConvertedPlayerId(GetTriggerPlayer())]==true) then
-return false
-endif
 return true
 endfunction
 function ILLI1111 takes nothing returns nothing
 local integer H8=0
 set OE=CreateTrigger()
 call DisableTrigger(OE)
-loop
-exitwhen H8>10
-call TriggerRegisterPlayerChatEvent(OE,Player(H8),"-",false)
-set H8=H8+1
-endloop
-call TriggerAddCondition(OE,Condition(function ILL1LLL1))
-call TriggerAddAction(OE,function ILL1ILL1)
 endfunction
 function ILLI11I1 takes nothing returns nothing
 local string array OZ
@@ -11924,13 +12011,23 @@ return false
 endif
 return true
 endfunction
+
 function ILLII1L1 takes nothing returns nothing
+local group gq = CreateGroup()
+local unit uq
+call GroupEnumUnitsSelected(gq, GetTriggerPlayer(), null)
+set uq = FirstOfGroup(gq)
+call DestroyGroup(gq)
+set gq = null
+
 call TriggerSleepAction(.01)
 if ILLI1LL1() then
 if false then
 call DisplayTextToForce(I1L11LI1(GetTriggerPlayer()),"                                                       Нельзя сохранить живого героя!")
 else
-if ILLI1L11() then
+if true then
+
+call ILL1ILL1(uq)
 call QuestMessageBJ(I1L11LI1(GetTriggerPlayer()),bj_QUESTMESSAGE_ALWAYSHINT,"                 |c0000FF00Baш кoд:|r -load "+Jc[GetConvertedPlayerId(GetTriggerPlayer())+5000])
 call DisplayTextToForce(I1L11LI1(GetTriggerPlayer()),"                                          |cFFFFFF00 Копия кода помещена в папку  SAVE-GAME\\Goblin_Survival\\   в корне WarCraft3|r
 |cFFFF0000ВНИМАНИЕ:|r           Сейвы желательно не удалять, а хотябы сохранять в отд�")
@@ -12018,168 +12115,11 @@ endif
 endif
 endfunction
 function ILLILII1 takes nothing returns nothing
-local string array OZ
-local integer Oj=0
-local integer OY=0
-local player OP
-local integer OQ=0
-local unit Oz
-local unit O0
-call SetPlayerName(GetOwningPlayer(GetTriggerUnit()),KH[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])
-set J5[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=false
-set Oz=GetTriggerUnit()
-set OP=GetOwningPlayer(Oz)
-set OQ=GetConvertedPlayerId(OP)
-set Oj=1
-loop
-exitwhen Oj>6
-if GetItemType(UnitItemInSlot(Ng[OQ],Oj-1))==ITEM_TYPE_CHARGED then
-call UnitRemoveItemFromSlotSwapped(Oj,Ng[OQ])
-endif
-set Oj=Oj+1
-endloop
-set O0=Ng[OQ]
-set Iu[OQ]=true
-set OZ[1]=I2S(GetPlayerState(OP,PLAYER_STATE_RESOURCE_GOLD))
-if GetUnitTypeId(Oz)==$48303030 then
-set OZ[2]="1"
-elseif GetUnitTypeId(Oz)==$48303033 then
-set OZ[2]="2"
-elseif GetUnitTypeId(Oz)==$48303031 then
-set OZ[2]="3"
-elseif GetUnitTypeId(Oz)==$48303032 then
-set OZ[2]="4"
-elseif GetUnitTypeId(Oz)==$48303035 then
-set OZ[2]="5"
-elseif GetUnitTypeId(Oz)==$48303036 then
-set OZ[2]="6"
-elseif GetUnitTypeId(Oz)==$48303034 then
-set OZ[2]="7"
-elseif GetUnitTypeId(Oz)==$4E303030 then
-set OZ[2]="8"
-else
-set OZ[2]="9"
-endif
-set OZ[3]=I2S(GetHeroXP(Oz))
-set OZ[4]=I2S(GetHeroLevel(Oz))
-if S2I(OZ[1])>S2I(OZ[4])*1000 then
-set OZ[1]=I2S(S2I(OZ[4])*1000)
-endif
-set OZ[5]=JR[OQ+10]
-set OZ[6]=I2S(Jb[OQ])
-set OZ[19]=SubStringBJ(GetUnitName(HV),4,6)
-if S2I(Jc[20+(OQ-1)*100])<=NY then
-set OZ[20]=I2S(NY)
-else
-set OZ[20]=Jc[20+(OQ-1)*100]
-endif
-set OZ[21]=I2S(JY[OQ])
-set OZ[22]=I2S(JZ[OQ])
-if JX[OQ]<1000 or JX[OQ]>4000 then
-set OZ[23]="18"
-else
-set OZ[23]=I2S(R2I(JX[OQ]/100))
-endif
-set Oj=1
-loop
-exitwhen Oj>6
-set OZ[Oj+6]=I2S(GetRandomInt(980,999))
-set OZ[Oj+12]=I2S(GetRandomInt(980,999))
-if UnitItemInSlot(Oz,Oj-1)!=null then
-set OY=100
-loop
-exitwhen OY>999
-if GetItemTypeId(UnitItemInSlot(Oz,Oj-1))==Oq[OY] then
-set OZ[Oj+6]=I2S(OY)
-set OY=999
-endif
-set OY=OY+1
-endloop
-endif
-if UnitItemInSlot(O0,Oj-1)!=null then
-set OY=100
-loop
-exitwhen OY>999
-if GetItemTypeId(UnitItemInSlot(O0,Oj-1))==Oq[OY] then
-set OZ[Oj+12]=I2S(OY)
-set OY=999
-endif
-set OY=OY+1
-endloop
-endif
-set Oj=Oj+1
-endloop
-set Oj=1
-loop
-exitwhen Oj>10
-if OQ==Oj then
-set OY=1
-loop
-exitwhen OY>25
-set Jc[OY+(OQ-1)*100]=OZ[OY]
-set OY=OY+1
-endloop
-endif
-set Oj=Oj+1
-endloop
-if Iu[OQ] then
-endif
-set JW[OQ]=true
-set O1=GetOwningPlayer(GetTriggerUnit())
-set JK[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=false
-set J5[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=true
-call GroupRemoveUnitSimple(GetTriggerUnit(),H9)
-call GroupAddUnitSimple(GetTriggerUnit(),LO)
-call ForForce(I1L11LL1(MAP_CONTROL_USER),function ILLIILL1)
-call SetUnitLifePercentBJ(GetTriggerUnit(),0.)
-call KillUnit(GetTriggerUnit())
-set IL[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=GetPlayerState(GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_GOLD)
-call SetPlayerStateBJ(GetTriggerPlayer(),PLAYER_STATE_RESOURCE_LUMBER,0)
-call SetPlayerStateBJ(GetOwningPlayer(GetTriggerUnit()),PLAYER_STATE_RESOURCE_GOLD,0)
-call PingMinimapLocForForceEx(GetPlayersAll(),GetUnitLoc(GetTriggerUnit()),3.,bj_MINIMAPPINGSTYLE_ATTACK,100,0.,0.)
-call SetUnitManaBJ(GetTriggerUnit(),0)
-set bj_wantDestroyGroup=true
-set JH[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=0
-call DisplayTextToForce(GetPlayersAll(),GetPlayerName(GetOwningPlayer(GetTriggerUnit()))+"|c0000FF40: Мне это не нужно!|r")
-call ForGroupBJ(I1L11II1(GetOwningPlayer(GetTriggerUnit())),function ILLIL111)
-call RemoveUnit(Ng[OQ])
-set bj_forLoopAIndex=1
-loop
-exitwhen bj_forLoopAIndex>10
-if J1[GetForLoopIndexA()]==1 then
-call AddSpecialEffectTargetUnitBJ("origin",MV[GetForLoopIndexA()],"Abilities\\Spells\\Items\\AIre\\AIreTarget.mdl")
-call DestroyEffect(GetLastCreatedEffectBJ())
-call SetUnitLifePercentBJ(MV[GetForLoopIndexA()],GetUnitLifePercent(MV[GetForLoopIndexA()])+40.)
-call SetUnitManaPercentBJ(MV[GetForLoopIndexA()],GetUnitManaPercent(MV[GetForLoopIndexA()])+40.)
-call GetUnitAbilityLevel(MV[GetForLoopIndexA()],$41305157)
-call UnitRemoveAbility(MV[GetForLoopIndexA()],$41305157)
-endif
-set bj_forLoopAIndex=bj_forLoopAIndex+1
-endloop
-set bj_wantDestroyGroup=true
-call ForGroupBJ(I1ILLLI1(GetPlayableMapRect()),function ILLILI11)
-if Nb==true then
-call I1LLLLL1()
-if GetPlayerSlotState(GetOwningPlayer(GetTriggerUnit()))==PLAYER_SLOT_STATE_PLAYING and O3==false then
-call PlaySoundBJ(H)
-call DisplayTextToForce(GetPlayersAll(),"|c00FF0000Последний раз гоблина видели здесь...|r")
-set Ne=GetUnitLoc(GetTriggerUnit())
-call CreateNUnitsAtLoc(1,$68303736,GetOwningPlayer(GetTriggerUnit()),Ne,bj_UNIT_FACING)
-call RemoveLocation(Ne)
-endif
-endif
-if IsUnitGroupEmptyBJ(H9)==true then
-call DisplayTimedTextToForce(GetPlayersAll(),30,"Все гоблины мертвы! Сохранитесь командой -save, и не забудьте посетить сайт нашей картостроительной Гильдии Goblin Workshop! - |c0000FF00http://goblinworkshop.ru|r,")
-set bj_forLoopAIndex=1
-loop
-exitwhen bj_forLoopAIndex>9
-call CreateItemLoc(O4[GetForLoopIndexA()],I1ILL111(GetRectCenter(GU),256.,I2R(GetForLoopIndexA())*40.))
-set bj_forLoopAIndex=bj_forLoopAIndex+1
-endloop
-endif
-if Kl==GetOwningPlayer(GetTriggerUnit()) then
-call ConditionalTriggerExecute(M5)
-endif
+
+call ReviveHeroLoc(GetTriggerUnit(), GetUnitLoc(GetTriggerUnit()), false)
+call SetUnitState(GetTriggerUnit(),UNIT_STATE_LIFE,GetUnitState(GetTriggerUnit(),UNIT_STATE_MAX_LIFE)*1)
+call SetUnitState(GetTriggerUnit(),UNIT_STATE_MANA,GetUnitState(GetTriggerUnit(),UNIT_STATE_MAX_MANA)*1)
+
 endfunction
 function ILLILLL1 takes nothing returns nothing
 call DisableTrigger(OE)
@@ -13845,8 +13785,6 @@ endif
 endfunction
 function L1ILIII1 takes nothing returns nothing
 if bj_isSinglePlayer then
-call DisableTrigger(OE)
-call DisableTrigger(OF)
 endif
 endfunction
 function L1ILIL11 takes nothing returns nothing
@@ -14435,8 +14373,6 @@ return true
 endfunction
 function L1L1LI11 takes nothing returns nothing
 if L1L1L1L1() then
-call DisableTrigger(OE)
-call DisableTrigger(OF)
 else
 endif
 endfunction
@@ -14740,7 +14676,6 @@ endif
 return true
 endfunction
 function L1LILLL1 takes nothing returns nothing
-call SetMapFlag(MAP_LOCK_RESOURCE_TRADING,false)
 set Je[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]=S2I(Jc[20+(GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))-1)*100])
 if L1LILL11() then
 set QQ=true
@@ -14787,8 +14722,6 @@ endif
 endfunction
 function L1LL1II1 takes nothing returns nothing
 call DestroyTimerDialog(QM)
-call DisableTrigger(OF)
-call DisableTrigger(OM)
 call DisableTrigger(GetTriggeringTrigger())
 set Nb=true
 call ForGroupBJ(I1ILLLI1(GV),function L1LL1I11)
@@ -15789,7 +15722,7 @@ endfunction
 function LII1IL11 takes nothing returns nothing
 if LII1IIL1() then
 else
-if LII1III1() then
+if false then
 call UnitRemoveItemSwapped(GetManipulatedItem(),GetTriggerUnit())
 call DisplayTextToForce(I1L11LI1(GetOwningPlayer(GetTriggerUnit())),"|c00FF0000Этот предмет принадлежит другому игроку!!|r")
 else
@@ -21393,7 +21326,7 @@ endif
 if LLIL1L11() then
 if LLIL1II1() then
 else
-if LLIL1I11() then
+if false then
 call UnitRemoveItemSwapped(GetManipulatedItem(),GetTriggerUnit())
 call RemoveLocation(Rr)
 call QuestMessageBJ(I1L11LI1(GetOwningPlayer(GetTriggerUnit())),bj_QUESTMESSAGE_WARNING,"|c00FF0000Этот предмет принадлежит другому игроку.|r")
@@ -48203,6 +48136,98 @@ call SetPlayerAllianceStateAllyBJ(Player(9),Player(5),true)
 call SetPlayerAllianceStateAllyBJ(Player(9),Player(6),true)
 call SetPlayerAllianceStateAllyBJ(Player(9),Player(7),true)
 call SetPlayerAllianceStateAllyBJ(Player(9),Player(8),true)
+
+call SetPlayerAllianceStateVisionBJ(Player(0),Player(1),true)
+call SetPlayerAllianceStateVisionBJ(Player(0),Player(2),true)
+call SetPlayerAllianceStateVisionBJ(Player(0),Player(3),true)
+call SetPlayerAllianceStateVisionBJ(Player(0),Player(4),true)
+call SetPlayerAllianceStateVisionBJ(Player(0),Player(5),true)
+call SetPlayerAllianceStateVisionBJ(Player(0),Player(6),true)
+call SetPlayerAllianceStateVisionBJ(Player(0),Player(7),true)
+call SetPlayerAllianceStateVisionBJ(Player(0),Player(8),true)
+call SetPlayerAllianceStateVisionBJ(Player(0),Player(9),true)
+call SetPlayerAllianceStateVisionBJ(Player(1),Player(0),true)
+call SetPlayerAllianceStateVisionBJ(Player(1),Player(2),true)
+call SetPlayerAllianceStateVisionBJ(Player(1),Player(3),true)
+call SetPlayerAllianceStateVisionBJ(Player(1),Player(4),true)
+call SetPlayerAllianceStateVisionBJ(Player(1),Player(5),true)
+call SetPlayerAllianceStateVisionBJ(Player(1),Player(6),true)
+call SetPlayerAllianceStateVisionBJ(Player(1),Player(7),true)
+call SetPlayerAllianceStateVisionBJ(Player(1),Player(8),true)
+call SetPlayerAllianceStateVisionBJ(Player(1),Player(9),true)
+call SetPlayerAllianceStateVisionBJ(Player(2),Player(0),true)
+call SetPlayerAllianceStateVisionBJ(Player(2),Player(1),true)
+call SetPlayerAllianceStateVisionBJ(Player(2),Player(3),true)
+call SetPlayerAllianceStateVisionBJ(Player(2),Player(4),true)
+call SetPlayerAllianceStateVisionBJ(Player(2),Player(5),true)
+call SetPlayerAllianceStateVisionBJ(Player(2),Player(6),true)
+call SetPlayerAllianceStateVisionBJ(Player(2),Player(7),true)
+call SetPlayerAllianceStateVisionBJ(Player(2),Player(8),true)
+call SetPlayerAllianceStateVisionBJ(Player(2),Player(9),true)
+call SetPlayerAllianceStateVisionBJ(Player(3),Player(0),true)
+call SetPlayerAllianceStateVisionBJ(Player(3),Player(1),true)
+call SetPlayerAllianceStateVisionBJ(Player(3),Player(2),true)
+call SetPlayerAllianceStateVisionBJ(Player(3),Player(4),true)
+call SetPlayerAllianceStateVisionBJ(Player(3),Player(5),true)
+call SetPlayerAllianceStateVisionBJ(Player(3),Player(6),true)
+call SetPlayerAllianceStateVisionBJ(Player(3),Player(7),true)
+call SetPlayerAllianceStateVisionBJ(Player(3),Player(8),true)
+call SetPlayerAllianceStateVisionBJ(Player(3),Player(9),true)
+call SetPlayerAllianceStateVisionBJ(Player(4),Player(0),true)
+call SetPlayerAllianceStateVisionBJ(Player(4),Player(1),true)
+call SetPlayerAllianceStateVisionBJ(Player(4),Player(2),true)
+call SetPlayerAllianceStateVisionBJ(Player(4),Player(3),true)
+call SetPlayerAllianceStateVisionBJ(Player(4),Player(5),true)
+call SetPlayerAllianceStateVisionBJ(Player(4),Player(6),true)
+call SetPlayerAllianceStateVisionBJ(Player(4),Player(7),true)
+call SetPlayerAllianceStateVisionBJ(Player(4),Player(8),true)
+call SetPlayerAllianceStateVisionBJ(Player(4),Player(9),true)
+call SetPlayerAllianceStateVisionBJ(Player(5),Player(0),true)
+call SetPlayerAllianceStateVisionBJ(Player(5),Player(1),true)
+call SetPlayerAllianceStateVisionBJ(Player(5),Player(2),true)
+call SetPlayerAllianceStateVisionBJ(Player(5),Player(3),true)
+call SetPlayerAllianceStateVisionBJ(Player(5),Player(4),true)
+call SetPlayerAllianceStateVisionBJ(Player(5),Player(6),true)
+call SetPlayerAllianceStateVisionBJ(Player(5),Player(7),true)
+call SetPlayerAllianceStateVisionBJ(Player(5),Player(8),true)
+call SetPlayerAllianceStateVisionBJ(Player(5),Player(9),true)
+call SetPlayerAllianceStateVisionBJ(Player(6),Player(0),true)
+call SetPlayerAllianceStateVisionBJ(Player(6),Player(1),true)
+call SetPlayerAllianceStateVisionBJ(Player(6),Player(2),true)
+call SetPlayerAllianceStateVisionBJ(Player(6),Player(3),true)
+call SetPlayerAllianceStateVisionBJ(Player(6),Player(4),true)
+call SetPlayerAllianceStateVisionBJ(Player(6),Player(5),true)
+call SetPlayerAllianceStateVisionBJ(Player(6),Player(7),true)
+call SetPlayerAllianceStateVisionBJ(Player(6),Player(8),true)
+call SetPlayerAllianceStateVisionBJ(Player(6),Player(9),true)
+call SetPlayerAllianceStateVisionBJ(Player(7),Player(0),true)
+call SetPlayerAllianceStateVisionBJ(Player(7),Player(1),true)
+call SetPlayerAllianceStateVisionBJ(Player(7),Player(2),true)
+call SetPlayerAllianceStateVisionBJ(Player(7),Player(3),true)
+call SetPlayerAllianceStateVisionBJ(Player(7),Player(4),true)
+call SetPlayerAllianceStateVisionBJ(Player(7),Player(5),true)
+call SetPlayerAllianceStateVisionBJ(Player(7),Player(6),true)
+call SetPlayerAllianceStateVisionBJ(Player(7),Player(8),true)
+call SetPlayerAllianceStateVisionBJ(Player(7),Player(9),true)
+call SetPlayerAllianceStateVisionBJ(Player(8),Player(0),true)
+call SetPlayerAllianceStateVisionBJ(Player(8),Player(1),true)
+call SetPlayerAllianceStateVisionBJ(Player(8),Player(2),true)
+call SetPlayerAllianceStateVisionBJ(Player(8),Player(3),true)
+call SetPlayerAllianceStateVisionBJ(Player(8),Player(4),true)
+call SetPlayerAllianceStateVisionBJ(Player(8),Player(5),true)
+call SetPlayerAllianceStateVisionBJ(Player(8),Player(6),true)
+call SetPlayerAllianceStateVisionBJ(Player(8),Player(7),true)
+call SetPlayerAllianceStateVisionBJ(Player(8),Player(9),true)
+call SetPlayerAllianceStateVisionBJ(Player(9),Player(0),true)
+call SetPlayerAllianceStateVisionBJ(Player(9),Player(1),true)
+call SetPlayerAllianceStateVisionBJ(Player(9),Player(2),true)
+call SetPlayerAllianceStateVisionBJ(Player(9),Player(3),true)
+call SetPlayerAllianceStateVisionBJ(Player(9),Player(4),true)
+call SetPlayerAllianceStateVisionBJ(Player(9),Player(5),true)
+call SetPlayerAllianceStateVisionBJ(Player(9),Player(6),true)
+call SetPlayerAllianceStateVisionBJ(Player(9),Player(7),true)
+call SetPlayerAllianceStateVisionBJ(Player(9),Player(8),true)
+
 call SetPlayerTeam(Player(10),1)
 call SetPlayerTeam(Player(11),1)
 call SetPlayerAllianceStateAllyBJ(Player(10),Player(11),true)
@@ -49663,12 +49688,6 @@ call DisableTrigger(O5)
 call TriggerRegisterTimerEventPeriodic(O5,2.)
 call TriggerAddAction(O5,function ILLILLL1)
 set O6=CreateTrigger()
-set bj_forLoopAIndex=0
-loop
-exitwhen bj_forLoopAIndex>10
-call TriggerRegisterPlayerChatEvent(O6,Player(bj_forLoopAIndex),"-save",false)
-set bj_forLoopAIndex=bj_forLoopAIndex+1
-endloop
 call TriggerAddCondition(O6,Condition(function ILLL11I1))
 call TriggerAddAction(O6,function ILLL11L1)
 set OL=CreateTrigger()
